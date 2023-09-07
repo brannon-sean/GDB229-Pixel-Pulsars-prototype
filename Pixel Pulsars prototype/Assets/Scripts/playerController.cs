@@ -25,15 +25,18 @@ public class playerController : MonoBehaviour, IDamage
     private int jumpedTimes;
     private bool isShooting;
     private float currentLeanAngle = 0f;
+    private int startHealth;
 
     private void Start()
     {
-
+        startHealth = healthPoints;
+        gamemanager.instance.playerScript.spawnPlayer();
     }
 
     void Update()
     {
         movement();
+        //lean();
 
         if (Input.GetButtonDown("Shoot") && !isShooting)
         {
@@ -110,5 +113,16 @@ public class playerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         healthPoints -= amount;
+        if(healthPoints <= 0)
+        {
+            gamemanager.instance.youLoseMenu();
+        }
+    }
+    public void spawnPlayer()
+    {
+        healthPoints = startHealth;
+        controller.enabled = false;
+        transform.position = gamemanager.instance.playerSpawnPos.transform.position;
+        controller.enabled = true;
     }
 }

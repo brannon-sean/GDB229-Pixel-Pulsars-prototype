@@ -22,6 +22,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     void Start()
     {
+        gamemanager.instance.updateGameGoal(1);
     }
     void Update()
     {
@@ -56,6 +57,7 @@ public class enemyAI : MonoBehaviour, IDamage
         StartCoroutine(flashDamage());
         if(healthPoints <= 0)
         {
+            gamemanager.instance.updateGameGoal(-1);
             GameObject newItem = Instantiate(loot, transform.position, Quaternion.identity);
             newItem.transform.parent = null;
             Destroy(gameObject);

@@ -24,4 +24,10 @@ public class buttonFunctions : MonoBehaviour
     {
         gamemanager.instance.playerScript.giveHealthPoints(amount);
     }
+
+    public void respawn()
+    {
+        gamemanager.instance.stateUnpause();
+        gamemanager.instance.playerScript.spawnPlayer();
+    }
 }

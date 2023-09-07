@@ -14,6 +14,12 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject pickupOption;
+    [SerializeField] GameObject winMenu;
+    [SerializeField] GameObject loseMenu;
+
+    public GameObject playerSpawnPos;
+
+    [SerializeField] int enemiesRemain;
 
     
 
@@ -26,6 +32,7 @@ public class gamemanager : MonoBehaviour
         instance = this;
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
+        playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
     }
 
     void Update()
@@ -59,5 +66,26 @@ public class gamemanager : MonoBehaviour
     {
         pickup = !pickup;
         pickupOption.SetActive(pickup);
+    }
+    IEnumerator youWinMenu()
+    {
+        yield return new WaitForSeconds(1);
+        statePause();
+        activeMenu = winMenu;
+        activeMenu.SetActive(isPaused);
+    }
+    public void youLoseMenu()
+    {
+        statePause();
+        activeMenu = loseMenu;
+        activeMenu.SetActive(isPaused);
+    }
+    public void updateGameGoal(int amount)
+    {
+        enemiesRemain += amount;
+        if(enemiesRemain <= 0)
+        {
+            StartCoroutine(youWinMenu());
+        }
     }
 }
