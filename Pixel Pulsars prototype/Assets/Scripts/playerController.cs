@@ -2,28 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class playerController : MonoBehaviour, IDamage
 {
     [SerializeField] CharacterController controller;
+
+    [SerializeField] int healthPoints;
     [SerializeField] float playerSpeed;
     [SerializeField] float jumpHeight;
+    [SerializeField] int jumpsMax;
     [SerializeField] float gravityValue;
-
-    private int jumpedTimes;
-    [SerializeField] int jumpedMax;
 
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
-    [SerializeField] int shootDist;
+    [SerializeField] int shootDistance;
 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Vector3 move;
+    private int jumpedTimes;
     private bool isShooting;
 
     private void Start()
     {
-        
+
+    }
+
+    void Update()
+    {
+        movement();
+
+        if (Input.GetButtonDown("Shoot") && !isShooting)
+        {
+            StartCoroutine(shoot());
+        }
     }
 
     void movement()
@@ -35,33 +46,21 @@ public class playerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        //Vector3 move = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-
         move = Input.GetAxis("Horizontal") * transform.right +
-               Input.GetAxis("Vertical") * transform.forward;
+            Input.GetAxis("Vertical") * transform.forward;
 
         controller.Move(move * Time.deltaTime * playerSpeed);
-                
+
 
         // Changes the height position of the player..
-        if (Input.GetButtonDown("Jump") && jumpedTimes < jumpedMax)
+        if (Input.GetButtonDown("Jump") && jumpedTimes < jumpsMax)
         {
             jumpedTimes++;
-            playerVelocity.y += jumpHeight;
+            playerVelocity.y = jumpHeight;
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
-    }
-
-    void Update()
-    {
-        movement();
-
-        if (Input.GetButton("Shoot") && !isShooting)
-        {
-            StartCoroutine(shoot());
-        }
     }
 
     IEnumerator shoot()
@@ -69,18 +68,26 @@ public class playerController : MonoBehaviour
         isShooting = true;
 
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDist))
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDistance))
         {
-            IDamage damageable = hit.collider.GetComponent<IDamage>();
-            
-            if(damageable != null)
+            IDamage damagable = hit.collider.GetComponent<IDamage>();
+            if (damagable != null)
             {
-                damageable.takeDamage(shootDamage);
+                damagable.takeDamage(shootDamage);
             }
         }
 
         yield return new WaitForSeconds(shootRate);
-
         isShooting = false;
+    }
+
+    public void giveHealthPoints(int amount)
+    {
+        healthPoints += amount;
+    }
+
+    public void takeDamage(int amount)
+    {
+        healthPoints -= amount;
     }
 }

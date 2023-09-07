@@ -1,39 +1,88 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer Model;
-    [SerializeField] int HP;
+    [SerializeField] NavMeshAgent agent;
+    [SerializeField] Renderer model;
+    [SerializeField] Transform shootPosition;
 
-    // Start is called before the first frame update
+    [SerializeField] int healthPoints;
+    [SerializeField] int targetFaceSpeed;
+
+    [SerializeField] float shootRate;
+    [SerializeField] GameObject bullet;
+
+    private Vector3 playerDirection;
+    private bool playerInRange;
+    private bool isShooting;
+
     void Start()
     {
-        
     }
-
-    // Update is called once per frame
     void Update()
     {
-        
+        if (playerInRange)
+        {
+            playerDirection = gamemanager.instance.player.transform.position - transform.position;
+
+            if (agent.remainingDistance <= agent.stoppingDistance)
+            {
+                faceTarget();
+                if (!isShooting)
+                {
+                    StartCoroutine(shoot());
+                }
+            }
+
+            agent.SetDestination(gamemanager.instance.player.transform.position);
+        }
     }
 
-    public void takeDamage(int damage)
+    IEnumerator shoot()
     {
-        HP -= damage;
-        StartCoroutine(flashdamage());
-        if (HP <= 0)
+        isShooting = true;
+        Instantiate(bullet, shootPosition.position, transform.rotation);
+        yield return new WaitForSeconds(shootRate);
+        isShooting = false;
+    }
+
+    public void takeDamage(int amount)
+    {
+        healthPoints -= amount;
+        StartCoroutine(flashDamage());
+        if(healthPoints <= 0)
         {
             Destroy(gameObject);
         }
-
+    }
+    IEnumerator flashDamage()
+    {
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = Color.white;
     }
 
-    IEnumerator flashdamage()
+    void faceTarget()
     {
-        Model.material.color = Color.red;
-        yield return new WaitForSeconds(0.1f);
-        Model.material.color = Color.white;
+        Quaternion rotation = Quaternion.LookRotation(playerDirection);
+        transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * targetFaceSpeed);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
     }
 }
