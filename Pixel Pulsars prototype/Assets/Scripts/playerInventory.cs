@@ -3,39 +3,59 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class playerInventory : MonoBehaviour, IIventory
 {
-    private List<Item> items = new List<Item>();
+    private List<KeyValuePair<Item, int>> items = new List<KeyValuePair<Item, int>>();
+
     public void addItem(Item item)
     {
         if (!containsItem(item))
         {
-            items.Add(item);
+            items.Add(new KeyValuePair<Item, int>(item, 1));
+            updateInventory();
+        }
+        else
+        {
+            KeyValuePair<Item, int> existingItem = items.Find(kv => kv.Key == item);
+            items.Remove(existingItem);
+            items.Add(new KeyValuePair<Item, int>(item, existingItem.Value + 1));
             updateInventory();
         }
     }
+
     public void removeItem(Item item)
     {
         if (containsItem(item))
         {
-            items.Remove(item);
+            KeyValuePair<Item, int> existingItem = items.Find(kv => kv.Key == item);
+            items.Remove(existingItem);
+            items.Add(new KeyValuePair<Item, int>(item, existingItem.Value - 1));
             updateInventory();
         }
     }
+
     public bool containsItem(Item item)
     {
-        return items.Contains(item);
+        return items.Exists(kv => kv.Key == item);
     }
 
     private void updateInventory()
     {
         int i = 0;
-        foreach(Image slot in gamemanager.instance.inventorySlots)
+        foreach (Image slot in gamemanager.instance.inventorySlots)
         {
             if (i < items.Count)
             {
-                slot.sprite = items[i].sprite; ;
+                Item item = items[i].Key;
+                slot.sprite = item.sprite;
+                TextMeshProUGUI count = slot.GetComponentInChildren<TextMeshProUGUI>();
+                if (count != null)
+                {
+                    int itemCount = items[i].Value;
+                    count.text = itemCount.ToString();
+                }
                 i++;
             }
             else

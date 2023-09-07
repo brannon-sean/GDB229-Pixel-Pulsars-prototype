@@ -63,7 +63,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             GameObject newItem = Instantiate(loot, transform.position, Quaternion.identity);
             newItem.transform.parent = null;
             Destroy(gameObject);
-            
         }
     }
     IEnumerator flashDamage()

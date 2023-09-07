@@ -62,9 +62,9 @@ public class gamemanager : MonoBehaviour
         activeMenu.SetActive(isPaused);
         activeMenu = null;
     }
-    public void togglePickup()
+    public void togglePickup(bool state)
     {
-        pickup = !pickup;
+        pickup = state;
         pickupOption.SetActive(pickup);
     }
     IEnumerator youWinMenu()

@@ -11,6 +11,7 @@ public class pickupItem : MonoBehaviour
         {
             playerInventory inventory = gamemanager.instance.player.GetComponent<playerInventory>();
             inventory.addItem(item);
+            gamemanager.instance.togglePickup(false);
             Destroy(gameObject);
         }
     }
@@ -18,14 +19,14 @@ public class pickupItem : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            gamemanager.instance.togglePickup();
+            gamemanager.instance.togglePickup(true);
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if(other.tag == "Player")
         {
-            gamemanager.instance.togglePickup();
+            gamemanager.instance.togglePickup(false);
         }
     }
 }
