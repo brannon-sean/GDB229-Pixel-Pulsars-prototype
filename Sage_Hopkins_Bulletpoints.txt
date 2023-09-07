@@ -1,0 +1,12 @@
+- Added bullet.cs from Lecture 2
+- Added gamemanager.cs from lecture 2
+- Updated enemyAI.cs from lecture 2
+- Updated playerController.cs from lecture 2
+- Added buttonFunctions.cs from lecture 2
+- Updated gamemanager.cs to control pickup inventory and toolbar.
+- Added IInventory.cs to manage inventory interactions
+- Added pickupItem.cs to allow for item pickup.
+- Added playerInventory.cs to create and manage inventory.
+- Added breakableWall.cs to handle breaking walls with IDamage
+- Updated playerInventory.cs to add item counter (Issue in github for counter starting at 15).
+- Fixed pickupItem.cs, the menu option not disappears after picking up an item.
