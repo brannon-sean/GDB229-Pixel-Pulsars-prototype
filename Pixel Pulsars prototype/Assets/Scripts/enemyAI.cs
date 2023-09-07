@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class enemyAI : MonoBehaviour, IDamage, IPhysics
 {
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
@@ -16,9 +16,11 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject loot;
 
+    private Vector3 pushBack;
     private Vector3 playerDirection;
     private bool playerInRange;
     private bool isShooting;
+    
 
     void Start()
     {
@@ -90,5 +92,9 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             playerInRange = false;
         }
+    }
+    public void physics(Vector3 push)
+    {
+        agent.velocity += push / 2;
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour, IDamage
+public class playerController : MonoBehaviour, IDamage, IPhysics
 {
     [SerializeField] CharacterController controller;
 
@@ -11,6 +11,7 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] float jumpHeight;
     [SerializeField] int jumpsMax;
     [SerializeField] float gravityValue;
+    [SerializeField] int pushBackResolve;
 
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
@@ -26,6 +27,8 @@ public class playerController : MonoBehaviour, IDamage
     private bool isShooting;
     private float currentLeanAngle = 0f;
     private int startHealth;
+    private Vector3 pushBack;
+    private Vector3 lift;
 
     private void Start()
     {
@@ -63,6 +66,19 @@ public class playerController : MonoBehaviour, IDamage
     }
     void movement()
     {
+        if (pushBack.magnitude > 0.01f)
+        {
+            pushBack.x = Mathf.Lerp(pushBack.x, 0, Time.deltaTime * pushBackResolve);
+            pushBack.y = Mathf.Lerp(pushBack.y, 0, Time.deltaTime * pushBackResolve * 3);
+            pushBack.z = Mathf.Lerp(pushBack.z, 0, Time.deltaTime * pushBackResolve);
+        }
+        if (lift.magnitude > 0.01f) 
+        {
+            lift.x = Mathf.Lerp(lift.x, 0, Time.deltaTime * pushBackResolve * 999);
+            lift.y = Mathf.Lerp(lift.y, 0, Time.deltaTime * pushBackResolve);
+            lift.z = Mathf.Lerp(lift.z, 0, Time.deltaTime * pushBackResolve * 999);
+        }
+
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
         {
@@ -84,7 +100,7 @@ public class playerController : MonoBehaviour, IDamage
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move(playerVelocity * Time.deltaTime);
+        controller.Move((playerVelocity + pushBack + lift) * Time.deltaTime);
     }
 
     IEnumerator shoot()
@@ -124,5 +140,9 @@ public class playerController : MonoBehaviour, IDamage
         controller.enabled = false;
         transform.position = gamemanager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
+    }
+    public void physics(Vector3 push)
+    {
+        lift += push;
     }
 }

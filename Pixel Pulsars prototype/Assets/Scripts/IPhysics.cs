@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IPhysics
 {
-    void Physics(Vector3 push);
+    void physics(Vector3 push);
 }
