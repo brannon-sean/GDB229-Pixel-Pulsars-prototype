@@ -1,0 +1,18 @@
+Works in Scripts:
+
+- Made Player Script
+- Made Enemy AI Script
+- Made Player Camera Script (FPS Camera and Controls)
+- Created Player Movement Script
+- Created Reticle for UI
+- Recreated Features from Lecture 1
+- On Call Helping to Bug Fix Every commit that was put into the project (Everyone did this even if they did not work on the script itself.
+
+(Work in Scripts were divided by Lectures they were taught in)
+
+Works in Level:
+
+- Made Entire Level (Placed Assets, Created Building, Set Spawn Point)
+- Made Nav Mesh for Level
+
+(Wanted to keep things simple, but showcase everything that was worked on one floor at a time)
