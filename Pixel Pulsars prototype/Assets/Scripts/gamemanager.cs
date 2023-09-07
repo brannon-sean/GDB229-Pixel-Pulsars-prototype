@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gamemanager : MonoBehaviour
 {
@@ -8,11 +9,16 @@ public class gamemanager : MonoBehaviour
 
     public GameObject player;
     public playerController playerScript;
+    public List<Image> inventorySlots;
 
     [SerializeField] GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject pickupOption;
+
+    
 
     bool isPaused;
+    bool pickup;
 
 
     void Awake()
@@ -48,5 +54,10 @@ public class gamemanager : MonoBehaviour
         isPaused = !isPaused;
         activeMenu.SetActive(isPaused);
         activeMenu = null;
+    }
+    public void togglePickup()
+    {
+        pickup = !pickup;
+        pickupOption.SetActive(pickup);
     }
 }

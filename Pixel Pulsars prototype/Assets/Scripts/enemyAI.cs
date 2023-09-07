@@ -14,6 +14,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
     [SerializeField] float shootRate;
     [SerializeField] GameObject bullet;
+    [SerializeField] GameObject loot;
 
     private Vector3 playerDirection;
     private bool playerInRange;
@@ -55,7 +56,10 @@ public class enemyAI : MonoBehaviour, IDamage
         StartCoroutine(flashDamage());
         if(healthPoints <= 0)
         {
+            GameObject newItem = Instantiate(loot, transform.position, Quaternion.identity);
+            newItem.transform.parent = null;
             Destroy(gameObject);
+            
         }
     }
     IEnumerator flashDamage()
