@@ -964,6 +964,8 @@ MonoBehaviour:
   shootRate: 0.5
   shootDamage: 1
   shootDistance: 20
+  leanSpeed: 3
+  leanMaxAngle: 65
 --- !u!4 &441724047
 Transform:
   m_ObjectHideFlags: 0

@@ -16,11 +16,15 @@ public class playerController : MonoBehaviour, IDamage
     [SerializeField] int shootDamage;
     [SerializeField] int shootDistance;
 
+    [SerializeField] float leanSpeed;
+    [SerializeField] float leanMaxAngle;
+
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Vector3 move;
     private int jumpedTimes;
     private bool isShooting;
+    private float currentLeanAngle = 0f;
 
     private void Start()
     {
@@ -35,8 +39,25 @@ public class playerController : MonoBehaviour, IDamage
         {
             StartCoroutine(shoot());
         }
+
+
     }
 
+    void lean()
+    {
+        if ( Input.GetKey(KeyCode.Q))
+        {
+            currentLeanAngle = Mathf.MoveTowardsAngle(currentLeanAngle, leanMaxAngle, leanSpeed * Time.deltaTime); 
+        } else if (Input.GetKey(KeyCode.E))
+        {
+            currentLeanAngle = Mathf.MoveTowardsAngle(currentLeanAngle, leanMaxAngle, leanSpeed * Time.deltaTime);
+        }
+        else
+        {
+            currentLeanAngle = Mathf.MoveTowardsAngle(currentLeanAngle, 0, leanSpeed * Time.deltaTime);
+        }
+        transform.localRotation = Quaternion.AngleAxis(currentLeanAngle, Vector3.forward);
+    }
     void movement()
     {
         groundedPlayer = controller.isGrounded;
