@@ -9,11 +9,12 @@ public class gamemanager : MonoBehaviour
 
     public GameObject player;
     public playerController playerScript;
-    public List<Image> inventorySlots;
+    public List<Image> inventoryItems;
+    public List<Image> abilitySlots;
 
     [SerializeField] GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
-    [SerializeField] GameObject pickupOption;
+    //[SerializeField] GameObject pickupOption;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
 
@@ -62,11 +63,11 @@ public class gamemanager : MonoBehaviour
         activeMenu.SetActive(isPaused);
         activeMenu = null;
     }
-    public void togglePickup(bool state)
-    {
-        pickup = state;
-        pickupOption.SetActive(pickup);
-    }
+    //public void togglePickup(bool state)
+    //{
+    //pickup = state;
+    //pickupOption.SetActive(pickup);
+    //}
     IEnumerator youWinMenu()
     {
         yield return new WaitForSeconds(1);

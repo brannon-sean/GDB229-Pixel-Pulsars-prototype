@@ -5,28 +5,14 @@ using UnityEngine;
 public class pickupItem : MonoBehaviour
 {
     [SerializeField] Item item;
-    private void Update()
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if(other.CompareTag("Player"))
         {
             playerInventory inventory = gamemanager.instance.player.GetComponent<playerInventory>();
             inventory.addItem(item);
-            gamemanager.instance.togglePickup(false);
             Destroy(gameObject);
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            gamemanager.instance.togglePickup(true);
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            gamemanager.instance.togglePickup(false);
         }
     }
 }

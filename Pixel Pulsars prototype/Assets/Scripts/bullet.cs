@@ -8,7 +8,7 @@ public class bullet : MonoBehaviour
     [SerializeField] Rigidbody rigidBody;
     [SerializeField] int damage;
     [SerializeField] int speed;
-    [SerializeField] int destroyTime;
+    [SerializeField] float destroyTime;
 
 
     // Start is called before the first frame update

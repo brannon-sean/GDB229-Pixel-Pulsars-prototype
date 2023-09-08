@@ -7,9 +7,15 @@ using TMPro;
 
 public class playerInventory : MonoBehaviour, IIventory
 {
+    [SerializeField] Item coin;
     private List<KeyValuePair<Item, int>> items = new List<KeyValuePair<Item, int>>();
 
-    public void addItem(Item item)
+    private void Start()
+    {
+        addItem(coin, 0);
+    }
+    
+    public void addItem(Item item, int ammount=1)
     {
         if (!containsItem(item))
         {
@@ -44,7 +50,7 @@ public class playerInventory : MonoBehaviour, IIventory
     private void updateInventory()
     {
         int i = 0;
-        foreach (Image slot in gamemanager.instance.inventorySlots)
+        foreach (Image slot in gamemanager.instance.inventoryItems)
         {
             if (i < items.Count)
             {

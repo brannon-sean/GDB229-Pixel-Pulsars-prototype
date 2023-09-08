@@ -16,6 +16,8 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDistance;
+    [SerializeField] GameObject bulletSpawn;
+    [SerializeField] GameObject bulletFlash;
 
     [SerializeField] float leanSpeed;
     [SerializeField] float leanMaxAngle;
@@ -107,6 +109,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     {
         isShooting = true;
 
+        Instantiate(bulletFlash, bulletSpawn.transform.position, transform.rotation);
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDistance))
         {
