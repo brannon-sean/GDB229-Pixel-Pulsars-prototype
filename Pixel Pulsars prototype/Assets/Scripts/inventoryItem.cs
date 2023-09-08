@@ -5,4 +5,10 @@ public class Item : ScriptableObject
 {
     public string itemName;
     public Sprite sprite;
+    public int price;
+    public string description;
+    public int speed;
+    public int damage;
+    public int jumps;
+    public int health;
 }

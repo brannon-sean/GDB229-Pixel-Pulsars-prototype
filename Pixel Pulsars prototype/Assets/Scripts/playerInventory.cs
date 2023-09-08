@@ -7,14 +7,8 @@ using TMPro;
 
 public class playerInventory : MonoBehaviour, IIventory
 {
-    [SerializeField] Item coin;
     private List<KeyValuePair<Item, int>> items = new List<KeyValuePair<Item, int>>();
 
-    private void Start()
-    {
-        addItem(coin, 0);
-    }
-    
     public void addItem(Item item, int ammount=1)
     {
         if (!containsItem(item))
@@ -31,13 +25,13 @@ public class playerInventory : MonoBehaviour, IIventory
         }
     }
 
-    public void removeItem(Item item)
+    public void removeItem(Item item, int ammount = 1)
     {
         if (containsItem(item))
         {
             KeyValuePair<Item, int> existingItem = items.Find(kv => kv.Key == item);
             items.Remove(existingItem);
-            items.Add(new KeyValuePair<Item, int>(item, existingItem.Value - 1));
+            items.Add(new KeyValuePair<Item, int>(item, existingItem.Value - ammount));
             updateInventory();
         }
     }
@@ -45,6 +39,20 @@ public class playerInventory : MonoBehaviour, IIventory
     public bool containsItem(Item item)
     {
         return items.Exists(kv => kv.Key == item);
+    }
+
+    public bool hasEnough(Item item, int amountRequired=0)
+    {
+        if (containsItem(item))
+        {
+            KeyValuePair<Item, int> existingItem = items.Find(kv => kv.Key == item);
+            
+            if(existingItem.Value >= amountRequired)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void updateInventory()

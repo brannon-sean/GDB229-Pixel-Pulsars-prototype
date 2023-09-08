@@ -30,4 +30,21 @@ public class buttonFunctions : MonoBehaviour
         gamemanager.instance.stateUnpause();
         gamemanager.instance.playerScript.spawnPlayer();
     }
+    public void purchase(int card)
+    {
+        playerInventory inventory = gamemanager.instance.player.GetComponent<playerInventory>();
+        if (inventory != null)
+        {
+            if (inventory.hasEnough(gamemanager.instance.coin, gamemanager.instance.storeItems[card].price))
+            {
+                inventory.addItem(gamemanager.instance.storeItems[card], 1);
+                inventory.removeItem(gamemanager.instance.coin, 5);
+                gamemanager.instance.storeCards[card].SetActive(false);
+            }
+            else 
+            {
+                Debug.Log("Player does not have enough");
+            }
+        }
+    }
 }

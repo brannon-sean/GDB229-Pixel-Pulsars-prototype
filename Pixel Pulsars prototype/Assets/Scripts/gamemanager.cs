@@ -11,16 +11,22 @@ public class gamemanager : MonoBehaviour
     public playerController playerScript;
     public List<Image> inventoryItems;
     public List<Image> abilitySlots;
+    public Item coin;
 
-    [SerializeField] GameObject activeMenu;
+    public GameObject activeMenu;
     [SerializeField] GameObject pauseMenu;
     //[SerializeField] GameObject pickupOption;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
+    [SerializeField] GameObject storeMenu;
+
+    [SerializeField] List<Item> possibleItems;
 
     public GameObject playerSpawnPos;
 
     [SerializeField] int enemiesRemain;
+    public List<Item> storeItems;
+    public List<GameObject> storeCards;
 
     
 
@@ -43,6 +49,9 @@ public class gamemanager : MonoBehaviour
             statePause();
             activeMenu = pauseMenu;
             activeMenu.SetActive(isPaused);
+        }else if (Input.GetButtonDown("Cancel") && activeMenu == storeMenu)
+        {
+            toggleStore(false);
         }
     }
 
@@ -68,6 +77,19 @@ public class gamemanager : MonoBehaviour
     //pickup = state;
     //pickupOption.SetActive(pickup);
     //}
+    public void toggleStore(bool state)
+    {
+        if (state)
+        {
+            storeMenu.SetActive(state);
+            activeMenu = storeMenu;
+            statePause();
+        }
+        else
+        {
+            stateUnpause();
+        }
+    }
     IEnumerator youWinMenu()
     {
         yield return new WaitForSeconds(1);
@@ -87,6 +109,27 @@ public class gamemanager : MonoBehaviour
         if(enemiesRemain <= 0)
         {
             StartCoroutine(youWinMenu());
+        }
+    }
+    public void updateStoreMenu()
+    {
+        for(int j = 0; j < 3; j++)
+        {
+            int random = Random.Range(0, 3);
+            storeItems[j] = possibleItems[random];
+        }
+        int i = 0;
+        foreach (Item item in storeItems)
+        {
+            if (item != null)
+            {
+               storeCard card = storeCards[i].GetComponent<storeCard>();
+                card.title.text = item.itemName;
+                card.description.text = item.description;
+                card.price.text = item.price.ToString();
+                card.sprite.sprite = item.sprite;
+            }
+            i++;
         }
     }
 }
