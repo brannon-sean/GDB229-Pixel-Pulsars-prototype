@@ -84,6 +84,7 @@ public class gamemanager : MonoBehaviour
             storeMenu.SetActive(state);
             activeMenu = storeMenu;
             statePause();
+            
         }
         else
         {
@@ -113,7 +114,10 @@ public class gamemanager : MonoBehaviour
     }
     public void updateStoreMenu()
     {
-        for(int j = 0; j < 3; j++)
+        storeCards[0].SetActive(true);
+        storeCards[1].SetActive(true);
+        storeCards[2].SetActive(true);
+        for (int j = 0; j < 3; j++)
         {
             int random = Random.Range(0, 3);
             storeItems[j] = possibleItems[random];

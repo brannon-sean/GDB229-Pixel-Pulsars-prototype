@@ -148,4 +148,22 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     {
         lift += push;
     }
+    public void addPlayerSeed(int amount)
+    {
+        playerSpeed += amount;
+    }
+    public void addPlayerDamage(int amount)
+    {
+        shootDamage += amount;
+    }
+
+    public void addPlayerJumps(int amount)
+    {
+        jumpsMax += amount;
+    }
+
+    public void addPlayerHealth(int amount)
+    {
+        healthPoints += amount;
+    }
 }

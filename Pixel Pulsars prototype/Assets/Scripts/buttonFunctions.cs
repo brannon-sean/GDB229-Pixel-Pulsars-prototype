@@ -40,6 +40,12 @@ public class buttonFunctions : MonoBehaviour
                 inventory.addItem(gamemanager.instance.storeItems[card], 1);
                 inventory.removeItem(gamemanager.instance.coin, 5);
                 gamemanager.instance.storeCards[card].SetActive(false);
+
+                //Update stats
+                gamemanager.instance.playerScript.addPlayerDamage(gamemanager.instance.storeItems[card].damage);
+                gamemanager.instance.playerScript.addPlayerSeed(gamemanager.instance.storeItems[card].speed);
+                gamemanager.instance.playerScript.addPlayerJumps(gamemanager.instance.storeItems[card].jumps);
+                gamemanager.instance.playerScript.addPlayerHealth(gamemanager.instance.storeItems[card].health);
             }
             else 
             {
