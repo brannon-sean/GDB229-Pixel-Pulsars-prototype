@@ -117,11 +117,12 @@ public class gamemanager : MonoBehaviour
         storeCards[0].SetActive(true);
         storeCards[1].SetActive(true);
         storeCards[2].SetActive(true);
-        for (int j = 0; j < 3; j++)
+        for (int j = 0; j < storeItems.Count; j++)
         {
-            int random = Random.Range(0, 3);
+            int random = Random.Range(0, possibleItems.Count);
             storeItems[j] = possibleItems[random];
         }
+
         int i = 0;
         foreach (Item item in storeItems)
         {
