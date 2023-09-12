@@ -8,41 +8,67 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPosition;
+    [SerializeField] Transform headPos;
 
     [SerializeField] int healthPoints;
     [SerializeField] int targetFaceSpeed;
+    [SerializeField] int viewAngle;
+    [SerializeField] int shootAngle;
 
     [SerializeField] float shootRate;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject loot;
 
-    private Vector3 pushBack;
     private Vector3 playerDirection;
     private bool playerInRange;
     private bool isShooting;
-    
+    private float stoppingDistOrig;
+    private float angleToPlayer;
 
     void Start()
     {
+        stoppingDistOrig = agent.stoppingDistance;
         gamemanager.instance.updateGameGoal(1);
     }
     void Update()
     {
-        if (playerInRange)
+        if (playerInRange && canSeePlayer())
         {
-            playerDirection = gamemanager.instance.player.transform.position - transform.position;
-
-            if (agent.remainingDistance <= agent.stoppingDistance)
-            {
-                faceTarget();
-                if (!isShooting)
-                {
-                    StartCoroutine(shoot());
-                }
-            }
-
-            agent.SetDestination(gamemanager.instance.player.transform.position);
+           
         }
+    }
+
+    bool canSeePlayer()
+    {
+        playerDirection = gamemanager.instance.player.transform.position - (transform.position - Vector3.down);
+        angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0, playerDirection.z), transform.forward);
+
+        Debug.Log(angleToPlayer);
+        Debug.DrawRay(headPos.position, playerDirection);
+
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, playerDirection, out hit))
+        {
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            {
+                agent.stoppingDistance = stoppingDistOrig;
+                agent.SetDestination(gamemanager.instance.player.transform.position);
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    faceTarget();
+
+                    if (!isShooting && angleToPlayer <= shootAngle)
+                    {
+                        StartCoroutine(shoot());
+                    }
+
+                }
+                return true;
+            }
+        }
+        agent.stoppingDistance = 0;
+        return false;
     }
 
     IEnumerator shoot()
@@ -55,6 +81,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     public void takeDamage(int amount)
     {
+        agent.SetDestination(gamemanager.instance.player.transform.position);
         healthPoints -= amount;
         StartCoroutine(flashDamage());
         if(healthPoints <= 0)

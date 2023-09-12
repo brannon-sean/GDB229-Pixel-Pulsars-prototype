@@ -606,8 +606,11 @@ MonoBehaviour:
   agent: {fileID: 1857691005673970729}
   model: {fileID: 5154680490360636420}
   shootPosition: {fileID: 4387116744522153755}
-  healthPoints: 4
+  headPos: {fileID: 2430646237854598105}
+  healthPoints: 2
   targetFaceSpeed: 2
+  viewAngle: 90
+  shootAngle: 1
   shootRate: 1.5
   bullet: {fileID: 6568610698451559880, guid: 5fadd8296df868f499fb460bff548489, type: 3}
   loot: {fileID: 5460856503541291857, guid: a9b2e85753280be4ba14e98037b55ac0, type: 3}
@@ -643,7 +646,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
