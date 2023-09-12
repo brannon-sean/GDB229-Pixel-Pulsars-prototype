@@ -29,13 +29,16 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private bool isShooting;
     private float currentLeanAngle = 0f;
     private int startHealth;
-    private Vector3 pushBack;
-    private Vector3 lift;
+    [SerializeField] Vector3 pushBack;
+    private int pushBackResTemp;
+
 
     private void Start()
     {
         startHealth = healthPoints;
+        pushBackResTemp = pushBackResolve;
         gamemanager.instance.playerScript.spawnPlayer();
+
     }
 
     void Update()
@@ -74,12 +77,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
             pushBack.y = Mathf.Lerp(pushBack.y, 0, Time.deltaTime * pushBackResolve * 3);
             pushBack.z = Mathf.Lerp(pushBack.z, 0, Time.deltaTime * pushBackResolve);
         }
-        if (lift.magnitude > 0.01f) 
-        {
-            lift.x = Mathf.Lerp(lift.x, 0, Time.deltaTime * pushBackResolve * 999);
-            lift.y = Mathf.Lerp(lift.y, 0, Time.deltaTime * pushBackResolve);
-            lift.z = Mathf.Lerp(lift.z, 0, Time.deltaTime * pushBackResolve * 999);
-        }
+      
 
         groundedPlayer = controller.isGrounded;
         if (groundedPlayer && playerVelocity.y < 0)
@@ -102,7 +100,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
-        controller.Move((playerVelocity + pushBack + lift) * Time.deltaTime);
+        controller.Move((playerVelocity + pushBack) * Time.deltaTime);
     }
 
     IEnumerator shoot()
@@ -146,7 +144,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     }
     public void physics(Vector3 push)
     {
-        lift += push;
+        pushBack += push;
     }
     public void addPlayerSeed(int amount)
     {
@@ -165,5 +163,16 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void addPlayerHealth(int amount)
     {
         healthPoints += amount;
+    }
+    public void airLiftToggle()
+    {
+        if(pushBack.y == 0)
+        {
+            pushBackResolve = 0;
+        }
+        if(pushBack.y != 0)
+        {
+            pushBackResolve = pushBackResTemp;
+        }
     }
 }
