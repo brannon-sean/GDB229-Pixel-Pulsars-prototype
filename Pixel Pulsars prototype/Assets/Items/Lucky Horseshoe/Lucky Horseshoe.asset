@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Lucky Horseshoe
   m_EditorClassIdentifier: 
   itemName: Lucky Horseshoe
-  sprite: {fileID: 21300000, guid: 016d5d495a647f24d9858c7f8f6f236e, type: 3}
+  sprite: {fileID: 21300000, guid: 9390289a686af964e91393458163a9d1, type: 3}
   price: 7
   description: The horseshoe off of a horse struck my lightning. +1 jump
   speed: 0

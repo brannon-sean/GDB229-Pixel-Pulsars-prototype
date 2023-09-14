@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Buffalo Vest
   m_EditorClassIdentifier: 
   itemName: Buffalo Vest
-  sprite: {fileID: 21300000, guid: 48b879bb2c626ba46b2a3fc99e516744, type: 3}
+  sprite: {fileID: 21300000, guid: 04490d95bbae5184596935b54ab6abf3, type: 3}
   price: 10
   description: Crafted from the rugged hide of the mighty buffalo, this vest is a
     testament to the resilience of the frontier's creatures. The thick, weathered

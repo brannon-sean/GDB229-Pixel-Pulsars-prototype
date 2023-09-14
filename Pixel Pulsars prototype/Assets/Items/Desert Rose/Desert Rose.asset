@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Desert Rose
   m_EditorClassIdentifier: 
   itemName: Desert Rose
-  sprite: {fileID: 21300000, guid: 56558d1fc8cb7b040be80bf9ae97f634, type: 3}
+  sprite: {fileID: 21300000, guid: b505f127de9a779448cb492aa8afb98c, type: 3}
   price: 10
   description: A rare and exquisite bloom found in the harshest corner of the Wild
     West. It's pedals, which seem to defy the unforgiving environment, hide a secret
