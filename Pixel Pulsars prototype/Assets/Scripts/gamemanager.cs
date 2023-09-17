@@ -19,6 +19,9 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
     [SerializeField] GameObject storeMenu;
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] GameObject fullMainMenu;
+    [SerializeField] GameObject characterSelectionMenu;
 
     [SerializeField] List<Item> possibleItems;
 
@@ -27,6 +30,9 @@ public class gamemanager : MonoBehaviour
     [SerializeField] int enemiesRemain;
     public List<Item> storeItems;
     public List<GameObject> storeCards;
+
+    public List<character> characterList;
+    public List<gun> gunList;
 
     
 
@@ -40,6 +46,7 @@ public class gamemanager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void Update()
@@ -91,6 +98,44 @@ public class gamemanager : MonoBehaviour
             stateUnpause();
         }
     }
+
+    public void toggleCharacterSection(bool state)
+    {
+        if (state)
+        {
+            characterSelectionMenu.SetActive(state);
+        }
+        else
+        {
+            stateUnpause();
+            toggleFullMainMenu(false);
+        }
+    }
+    public void toggleFullMainMenu(bool state)
+    {
+        Time.timeScale = 1;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        activeMenu = null;
+        isPaused = !isPaused;
+        fullMainMenu.SetActive(state);
+        stateUnpause();
+    }
+    public void toggleMainMenu(bool state)
+    {
+        if (state)
+        {
+            mainMenu.SetActive(state);
+            activeMenu = mainMenu;
+            statePause();
+        }
+        else
+        {
+            stateUnpause();
+            toggleCharacterSection(true);
+        }
+    }
+
     IEnumerator youWinMenu()
     {
         yield return new WaitForSeconds(1);

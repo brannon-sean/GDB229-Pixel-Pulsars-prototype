@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class playerController : MonoBehaviour, IDamage, IPhysics
 {
     [SerializeField] CharacterController controller;
 
-    [SerializeField] int healthPoints;
-    [SerializeField] float playerSpeed;
+    public int healthPoints;
+    public float playerSpeed;
     [SerializeField] float jumpHeight;
-    [SerializeField] int jumpsMax;
+    public int jumpsMax;
     [SerializeField] float gravityValue;
     [SerializeField] int pushBackResolve;
 
@@ -18,6 +19,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] int shootDistance;
     [SerializeField] GameObject bulletSpawn;
     [SerializeField] GameObject bulletFlash;
+    [SerializeField] GameObject gunModel;
 
     [SerializeField] float leanSpeed;
     [SerializeField] float leanMaxAngle;
@@ -150,19 +152,34 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     {
         playerSpeed += amount;
     }
+    public void setPlayerSpeed(int amount)
+    {
+        playerSpeed = amount;
+    }
     public void addPlayerDamage(int amount)
     {
         shootDamage += amount;
     }
-
+    public void setPlayerDamage(int amount)
+    {
+        shootDamage = amount;
+    }
     public void addPlayerJumps(int amount)
     {
         jumpsMax += amount;
+    }
+    public void setPlayerJumps(int amount)
+    {
+        jumpsMax = amount;
     }
 
     public void addPlayerHealth(int amount)
     {
         healthPoints += amount;
+    }
+    public void setPlayerHealth(int amount)
+    {
+        healthPoints = amount;
     }
     public void airLiftToggle()
     {
@@ -174,5 +191,14 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         {
             pushBackResolve = pushBackResTemp;
         }
+    }
+    public void setGunModel(gun model)
+    {
+        gunModel.GetComponent<MeshFilter>().sharedMesh = model.model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<Renderer>().sharedMaterial = model.model.GetComponent<Renderer>().sharedMaterial;
+
+        shootDamage = model.shootDamage;
+        shootDistance = model.shootDistance;
+        shootRate = model.shootRate;
     }
 }

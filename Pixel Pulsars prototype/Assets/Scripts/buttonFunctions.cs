@@ -53,4 +53,17 @@ public class buttonFunctions : MonoBehaviour
             }
         }
     }
+    public void selectCharacter(int character)
+    {
+        gamemanager.instance.playerScript.setPlayerHealth(gamemanager.instance.characterList[character].healthPoints);
+        gamemanager.instance.playerScript.setPlayerSpeed(gamemanager.instance.characterList[character].playerSpeed);
+        gamemanager.instance.playerScript.setPlayerJumps(gamemanager.instance.characterList[character].jumpsMax);
+
+        gamemanager.instance.playerScript.setGunModel(gamemanager.instance.characterList[character].gunPrefab);
+        gamemanager.instance.toggleCharacterSection(false);
+    }
+    public void startGame()
+    {
+        gamemanager.instance.toggleMainMenu(false);
+    }
 }
