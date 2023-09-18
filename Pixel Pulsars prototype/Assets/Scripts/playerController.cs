@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class playerController : MonoBehaviour, IDamage, IPhysics
 {
@@ -9,6 +10,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 
     public int healthPoints;
     public float playerSpeed;
+    public float runSpeed;
     [SerializeField] float jumpHeight;
     public int jumpsMax;
     [SerializeField] float gravityValue;
@@ -33,6 +35,11 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private int startHealth;
     [SerializeField] Vector3 pushBack;
     private int pushBackResTemp;
+    private float baseSpeed = 6;
+
+
+    private bool isSprinting = false;
+    [SerializeField] float maxStamina;
 
 
     private void Start()
@@ -47,13 +54,13 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     {
         movement();
         //lean();
+        Sprint();
+        StaminaRegen();
 
         if (Input.GetButtonDown("Shoot") && !isShooting)
         {
             StartCoroutine(shoot());
         }
-
-
     }
 
     void lean()
@@ -73,6 +80,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     }
     void movement()
     {
+
         if (pushBack.magnitude > 0.01f)
         {
             pushBack.x = Mathf.Lerp(pushBack.x, 0, Time.deltaTime * pushBackResolve);
@@ -105,6 +113,48 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         controller.Move((playerVelocity + pushBack) * Time.deltaTime);
     }
 
+    void Sprint()
+    {
+       float basePlayerSpeed = playerSpeed;
+
+       if (Input.GetKey(KeyCode.LeftShift))
+       {
+            setPlayerSpeed(runSpeed);
+            isSprinting = true;
+       }
+       else
+       {
+            setPlayerSpeed(baseSpeed);
+            isSprinting = false;
+       }
+    }
+
+    void StaminaRegen()
+    {
+        float playerStamina = maxStamina;
+
+        if (!isSprinting) 
+        {
+            if (playerStamina <= maxStamina - 0.01)
+            {
+                playerStamina += 10 * Time.deltaTime;
+            }
+        }
+        if (isSprinting)
+        {
+            if (playerStamina > 0.01)
+            {
+                playerStamina -= 50 * Time.deltaTime;
+            }
+            if (playerStamina <= 0)
+            {
+                playerSpeed = baseSpeed;
+                isSprinting = false;
+            }
+        }
+        
+    }
+    
     IEnumerator shoot()
     {
         isShooting = true;
@@ -148,11 +198,11 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     {
         pushBack += push;
     }
-    public void addPlayerSeed(int amount)
+    public void addPlayerSeed(float amount)
     {
         playerSpeed += amount;
     }
-    public void setPlayerSpeed(int amount)
+    public void setPlayerSpeed(float amount)
     {
         playerSpeed = amount;
     }
