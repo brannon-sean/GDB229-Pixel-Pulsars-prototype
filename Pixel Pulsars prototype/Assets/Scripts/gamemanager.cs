@@ -37,6 +37,7 @@ public class gamemanager : MonoBehaviour
     [Header("--- Enemy Components ---")]
     [SerializeField] int enemiesRemain;
 
+
     //Variable definitions:
     bool isPaused;
     bool pickup;
@@ -182,12 +183,5 @@ public class gamemanager : MonoBehaviour
             }
             i++;
         }
-    }
-
-    public IEnumerator playerFlashDamage()
-    {
-        playerDamageFlash.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        playerDamageFlash.SetActive(false);
     }
 }
