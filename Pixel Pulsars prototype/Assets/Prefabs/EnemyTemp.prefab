@@ -47,8 +47,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d76c25f2d32d08a45a9274a7e5d7d063, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Model: {fileID: 6926588373814531286}
-  HP: 3
+  agent: {fileID: 0}
+  model: {fileID: 0}
+  shootPosition: {fileID: 0}
+  headPos: {fileID: 0}
+  healthPoints: 0
+  targetFaceSpeed: 0
+  viewAngle: 0
+  shootAngle: 0
+  roamDist: 5
+  roamPauseTime: 2
+  shootRate: 0
+  bullet: {fileID: 0}
+  loot: {fileID: 0}
 --- !u!33 &5251024041918273421
 MeshFilter:
   m_ObjectHideFlags: 0
