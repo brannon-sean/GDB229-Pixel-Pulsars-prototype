@@ -181,19 +181,29 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void giveHealthPoints(int amount)
     {
         healthPoints += amount;
+        updatePlayerUI();
     }
 
     public void takeDamage(int amount)
     {
         healthPoints -= amount;
-        if(healthPoints <= 0)
+        updatePlayerUI();
+
+        if (healthPoints <= 0)
         {
             gamemanager.instance.youLoseMenu();
         }
     }
+
+    public void updatePlayerUI()
+    {
+        gamemanager.instance.playerHPBar.fillAmount = (float)healthPoints / startHealth;
+    }
+
     public void spawnPlayer()
     {
         healthPoints = startHealth;
+        updatePlayerUI();
         controller.enabled = false;
         transform.position = gamemanager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
