@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class StaminaBar : MonoBehaviour
 {
+    [Header("--- Components ---")]
     [SerializeField] Slider maxStamina;
 
     // Start is called before the first frame update

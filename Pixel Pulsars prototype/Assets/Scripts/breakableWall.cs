@@ -4,20 +4,10 @@ using UnityEngine;
 
 public class breakableWall : MonoBehaviour, IDamage
 {
+    [Header("--- Components ---")]
     [SerializeField] int healthPoints;
     [SerializeField] GameObject wall;
     [SerializeField] GameObject brokenWall;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void takeDamage(int amount)
     {

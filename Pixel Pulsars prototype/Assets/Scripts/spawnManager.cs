@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class spawnManager : MonoBehaviour
 {
+    [Header("--- Enemy Components ---")]
     //Normal enemies
     [SerializeField] List<GameObject> enemySpawnList;
     //Medium enemies
@@ -12,20 +13,22 @@ public class spawnManager : MonoBehaviour
     //Boss enemies
     [SerializeField] List<GameObject> bossEnemySpawnList;
 
+    [Header("--- Spawning Characteristics ---")]
     [SerializeField] float spawnRadiusMax;
     [SerializeField] float spawnRadiusMin;
     [SerializeField] int waveSize;
-
+    [SerializeField] float scaleMin;
+    [SerializeField] float scaleMax;
     [SerializeField] int enemySpawnCount;
     [SerializeField] int mediumEnemySpawnCount;
     [SerializeField] int bossEnemySpawnCount;
+    [SerializeField] int timeToCompleteWave;
 
+    //Variable definitions:
     private int previousEnemySpawnCount;
     private int previousMediumSpawnCount;
     private int previousBossSpawnCount;
     private int previousWaveSize;
-
-    [SerializeField] int timeToCompleteWave;
     private int wave;
     private bool waveSpawned;
 
@@ -93,7 +96,7 @@ public class spawnManager : MonoBehaviour
         spawnWave();
         waveSpawned = true;
         yield return new WaitForSeconds(timeToCompleteWave);
-        float scaler = Random.Range(1.01f, 1.45f);
+        float scaler = Random.Range(scaleMin, scaleMax);
         enemySpawnCount = (int)(previousEnemySpawnCount * scaler);
         mediumEnemySpawnCount = (int)(previousMediumSpawnCount * scaler);
         bossEnemySpawnCount = (int)(previousBossSpawnCount * scaler);

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class explosion : MonoBehaviour
 {
+    [Header("--- Explosion Stats ---")]
     [SerializeField] int explosionForce;
 
     private void OnTriggerEnter(Collider other)

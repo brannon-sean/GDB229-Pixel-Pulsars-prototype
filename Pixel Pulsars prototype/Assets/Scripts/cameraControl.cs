@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class cameraControl : MonoBehaviour
 {
+    [Header("--- Camera Stats ---")]
     [SerializeField] int sensitivity;
     [SerializeField] int lockVertMin;
     [SerializeField] int lockVertMax;
     [SerializeField] bool invertY;
 
+    //Variable Definitions:
     float xRotation;
 
-    // Start is called before the first frame update
     void Start()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
         //get input

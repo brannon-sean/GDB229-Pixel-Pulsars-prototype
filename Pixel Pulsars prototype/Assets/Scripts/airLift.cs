@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class airLift : MonoBehaviour
 {
+    [Header("--- Components ---")]
     [SerializeField] float liftStrength;
     
 

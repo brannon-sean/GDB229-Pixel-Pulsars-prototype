@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class store : MonoBehaviour
 {
+    //Variable Definitions:
     private bool storeEnabled;
 
     private void OnTriggerEnter(Collider other)

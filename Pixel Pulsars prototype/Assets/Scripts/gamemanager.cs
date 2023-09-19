@@ -7,39 +7,37 @@ public class gamemanager : MonoBehaviour
 {
     public static gamemanager instance;
 
+    [Header("--- Player Components ---")]
     public GameObject player;
     public playerController playerScript;
+    public GameObject playerSpawnPos;
+    public List<character> characterList;
+    public List<gun> gunList;
+
+    [Header("--- UI Components ---")]
     public List<Image> inventoryItems;
     public List<Image> abilitySlots;
     public Item coin;
-
     public GameObject activeMenu;
+    public Image playerHPBar;
     [SerializeField] GameObject pauseMenu;
-    //[SerializeField] GameObject pickupOption;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
     [SerializeField] GameObject storeMenu;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject fullMainMenu;
     [SerializeField] GameObject characterSelectionMenu;
-
-    [SerializeField] List<Item> possibleItems;
-
-    public GameObject playerSpawnPos;
-
-    [SerializeField] int enemiesRemain;
-    public List<Item> storeItems;
-    public List<GameObject> storeCards;
-
-    public List<character> characterList;
-    public List<gun> gunList;
-
-    // Player Stats
-    public Image playerHPBar;
     [SerializeField] GameObject playerDamageFlash;
 
+    [Header("--- Store Components ---")]
+    public List<Item> storeItems;
+    public List<GameObject> storeCards;
+    [SerializeField] List<Item> possibleItems;
 
+    [Header("--- Enemy Components ---")]
+    [SerializeField] int enemiesRemain;
 
+    //Variable definitions:
     bool isPaused;
     bool pickup;
 
@@ -66,7 +64,7 @@ public class gamemanager : MonoBehaviour
             toggleStore(false);
         }
     }
-
+    //Enter pause state
     public void statePause()
     {
         Time.timeScale = 0;
@@ -74,7 +72,7 @@ public class gamemanager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         isPaused = !isPaused;
     }
-
+    //Exit pause state
     public void stateUnpause()
     {
         Time.timeScale = 1;
@@ -84,11 +82,7 @@ public class gamemanager : MonoBehaviour
         activeMenu.SetActive(isPaused);
         activeMenu = null;
     }
-    //public void togglePickup(bool state)
-    //{
-    //pickup = state;
-    //pickupOption.SetActive(pickup);
-    //}
+    //Toggle store menu and pause/unpause game.
     public void toggleStore(bool state)
     {
         if (state)
@@ -103,7 +97,7 @@ public class gamemanager : MonoBehaviour
             stateUnpause();
         }
     }
-
+    //Toggle character selection menu on start, unpause game once false
     public void toggleCharacterSection(bool state)
     {
         if (state)
@@ -116,6 +110,7 @@ public class gamemanager : MonoBehaviour
             toggleFullMainMenu(false);
         }
     }
+    //Deactivate main menu gameobject entirely.
     public void toggleFullMainMenu(bool state)
     {
         Time.timeScale = 1;
@@ -126,6 +121,7 @@ public class gamemanager : MonoBehaviour
         fullMainMenu.SetActive(state);
         stateUnpause();
     }
+    //Toggle main menu screen once character game is playing.
     public void toggleMainMenu(bool state)
     {
         if (state)

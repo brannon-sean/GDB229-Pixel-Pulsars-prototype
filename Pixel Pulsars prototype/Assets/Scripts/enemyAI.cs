@@ -5,20 +5,23 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage, IPhysics
 {
+    [Header("--- Components ---")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPosition;
     [SerializeField] Transform headPos;
+    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject loot;
 
+    [Header("--- Enemy Stats ---")]
     [SerializeField] int healthPoints;
     [SerializeField] int targetFaceSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
 
     [SerializeField] float shootRate;
-    [SerializeField] GameObject bullet;
-    [SerializeField] GameObject loot;
 
+    //Variable Definitions:
     private Vector3 playerDirection;
     private bool playerInRange;
     private bool isShooting;

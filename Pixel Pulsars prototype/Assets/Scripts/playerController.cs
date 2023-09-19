@@ -9,25 +9,27 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 {
     [Header("--- Components ---")]
     [SerializeField] CharacterController controller;
-
-    public int healthPoints;
-    public float playerSpeed;
-    public float runSpeed;
-    [SerializeField] float jumpHeight;
-    public int jumpsMax;
-    [SerializeField] float gravityValue;
-    [SerializeField] int pushBackResolve;
-
-    [SerializeField] float shootRate;
-    [SerializeField] int shootDamage;
-    [SerializeField] int shootDistance;
     [SerializeField] GameObject bulletSpawn;
     [SerializeField] GameObject bulletFlash;
     [SerializeField] GameObject gunModel;
 
+    [Header("--- Player Stats ---")]
+    public int healthPoints;
+    public float playerSpeed;
+    public float runSpeed;
+    public int jumpsMax;
+    [SerializeField] float jumpHeight;
+    [SerializeField] float gravityValue;
+    [SerializeField] int pushBackResolve;
+    [SerializeField] float shootRate;
+    [SerializeField] int shootDamage;
+    [SerializeField] int shootDistance;
     [SerializeField] float leanSpeed;
     [SerializeField] float leanMaxAngle;
+    [SerializeField] Vector3 pushBack;
 
+
+    //Variable Defintions: 
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Vector3 move;
@@ -35,11 +37,8 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private bool isShooting;
     private float currentLeanAngle = 0f;
     private int startHealth;
-    [SerializeField] Vector3 pushBack;
     private int pushBackResTemp;
     private float baseSpeed = 6;
-
-
     private bool isSprinting;
 
 

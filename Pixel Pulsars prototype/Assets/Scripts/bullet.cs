@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class bullet : MonoBehaviour
 {
-
+    [Header("--- Components ---")]
     [SerializeField] Rigidbody rigidBody;
+
+    [Header("--- Bullet Stats ---")]
     [SerializeField] int damage;
     [SerializeField] int speed;
     [SerializeField] float destroyTime;
 
-
-    // Start is called before the first frame update
     void Start()
     {
         rigidBody.velocity = (gamemanager.instance.player.transform.position - transform.position) * speed;
