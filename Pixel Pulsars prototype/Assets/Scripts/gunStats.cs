@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu]
 
-public class gun : ScriptableObject
+public class gunStats : ScriptableObject
 {
     // Gun Stats
     public float shootRate;
@@ -14,7 +14,7 @@ public class gun : ScriptableObject
     public int maxAmmo;
 
     // Gun Model 
-    public GameObject model;
+    public GameObject gunModel;
     public ParticleSystem hitEff;
     public AudioClip shotSound;
 
