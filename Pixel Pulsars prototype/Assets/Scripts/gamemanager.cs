@@ -60,7 +60,8 @@ public class gamemanager : MonoBehaviour
             statePause();
             activeMenu = pauseMenu;
             activeMenu.SetActive(isPaused);
-        }else if (Input.GetButtonDown("Cancel") && activeMenu == storeMenu)
+        }
+        else if (Input.GetButtonDown("Cancel") && activeMenu == storeMenu)
         {
             toggleStore(false);
         }
@@ -149,8 +150,8 @@ public class gamemanager : MonoBehaviour
     }
     public void youLoseMenu()
     {
+        activeMenu = loseMenu; 
         statePause();
-        activeMenu = loseMenu;
         activeMenu.SetActive(isPaused);
     }
     public void updateGameGoal(int amount)

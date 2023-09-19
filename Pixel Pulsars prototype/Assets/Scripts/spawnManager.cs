@@ -5,8 +5,11 @@ using UnityEngine.AI;
 
 public class spawnManager : MonoBehaviour
 {
+    //Normal enemies
     [SerializeField] List<GameObject> enemySpawnList;
+    //Medium enemies
     [SerializeField] List<GameObject> mediumEnemySpawnList;
+    //Boss enemies
     [SerializeField] List<GameObject> bossEnemySpawnList;
 
     [SerializeField] float spawnRadiusMax;

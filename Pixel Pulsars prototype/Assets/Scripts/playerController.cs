@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class playerController : MonoBehaviour, IDamage, IPhysics
 {
+    [Header("--- Components ---")]
     [SerializeField] CharacterController controller;
 
     public int healthPoints;
