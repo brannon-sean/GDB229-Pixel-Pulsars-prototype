@@ -34,11 +34,7 @@ public class gamemanager : MonoBehaviour
     public List<character> characterList;
     public List<gun> gunList;
 
-    // Player Stats
-    public Image playerHPBar;
-    [SerializeField] GameObject playerDamageFlash;
-
-
+    
 
     bool isPaused;
     bool pickup;
@@ -186,12 +182,5 @@ public class gamemanager : MonoBehaviour
             }
             i++;
         }
-    }
-
-    public IEnumerator playerFlashDamage()
-    {
-        playerDamageFlash.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        playerDamageFlash.SetActive(false);
     }
 }

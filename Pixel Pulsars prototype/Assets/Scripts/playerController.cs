@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,7 +39,8 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private float baseSpeed = 6;
 
 
-    private bool isSprinting;
+    private bool isSprinting = false;
+    [SerializeField] float maxStamina;
 
 
     private void Start()
@@ -54,6 +54,9 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     void Update()
     {
         movement();
+        //lean();
+        Sprint();
+        StaminaRegen();
 
         if (Input.GetButtonDown("Shoot") && !isShooting)
         {
@@ -111,20 +114,48 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         controller.Move((playerVelocity + pushBack) * Time.deltaTime);
     }
 
-    //void Sprint()
-    //{
-    //   float basePlayerSpeed = playerSpeed;
-    //
-    //   if (Input.GetKey(KeyCode.LeftShift))
-    //   {
-    //        setPlayerSpeed(runSpeed);
-    //   }
-    //   else
-    //   {
-    //        setPlayerSpeed(baseSpeed);
-    //   }
-    //}
+    void Sprint()
+    {
+       float basePlayerSpeed = playerSpeed;
 
+       if (Input.GetKey(KeyCode.LeftShift))
+       {
+            setPlayerSpeed(runSpeed);
+            isSprinting = true;
+       }
+       else
+       {
+            setPlayerSpeed(baseSpeed);
+            isSprinting = false;
+       }
+    }
+
+    void StaminaRegen()
+    {
+        float playerStamina = maxStamina;
+
+        if (!isSprinting) 
+        {
+            if (playerStamina <= maxStamina - 0.01)
+            {
+                playerStamina += 10 * Time.deltaTime;
+            }
+        }
+        if (isSprinting)
+        {
+            if (playerStamina > 0.01)
+            {
+                playerStamina -= 50 * Time.deltaTime;
+            }
+            if (playerStamina <= 0)
+            {
+                playerSpeed = baseSpeed;
+                isSprinting = false;
+            }
+        }
+        
+    }
+    
     IEnumerator shoot()
     {
         isShooting = true;
@@ -147,16 +178,12 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void giveHealthPoints(int amount)
     {
         healthPoints += amount;
-        //updatePlayerUI();
     }
 
     public void takeDamage(int amount)
     {
         healthPoints -= amount;
-        //updatePlayerUI();
-        StartCoroutine(gamemanager.instance.playerFlashDamage());
-
-        if (healthPoints <= 0)
+        if(healthPoints <= 0)
         {
             gamemanager.instance.youLoseMenu();
         }
@@ -164,7 +191,6 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void spawnPlayer()
     {
         healthPoints = startHealth;
-        //updatePlayerUI();
         controller.enabled = false;
         transform.position = gamemanager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
@@ -226,10 +252,4 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         shootDistance = model.shootDistance;
         shootRate = model.shootRate;
     }
-
-    //public void updatePlayerUI()
-    //{
-    //    gamemanager.instance.playerHPBar.fillAmount = (float)healthPoints / startHealth;
-    //}
-
 }
