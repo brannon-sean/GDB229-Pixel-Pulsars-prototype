@@ -34,21 +34,16 @@ public class gamemanager : MonoBehaviour
     [SerializeField] List<Item> possibleItems;
     public List<Item> storeItems;
     public List<GameObject> storeCards;
-<<<<<<< Updated upstream
+    //Already exist
+    //public List<character> characterList;
+    //public List<gun> gunList;
 
-    public List<character> characterList;
-    public List<gunStats> gunList;
-
-    // UI Changes
     public Image playerHPBar;
     [SerializeField] GameObject playerDamageFlash;
     [SerializeField] TMP_Text enemiesRemainingText;
     [SerializeField] TMP_Text currentWaveRemainingText;
 
-
-=======
     public Item coin;
->>>>>>> Stashed changes
 
     bool isPaused;
     bool pickup;
