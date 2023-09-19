@@ -8,29 +8,33 @@ public class gamemanager : MonoBehaviour
 {
     public static gamemanager instance;
 
+    [Header("--- Player Components ---")]
     public GameObject player;
     public playerController playerScript;
     public List<Image> inventoryItems;
     public List<Image> abilitySlots;
-    public Item coin;
+    public GameObject playerSpawnPos;
+    public List<character> characterList;
+    public List<gun> gunList;
 
-    public GameObject activeMenu;
+    [Header("--- UI Components ---")]
     [SerializeField] GameObject pauseMenu;
-    //[SerializeField] GameObject pickupOption;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
     [SerializeField] GameObject storeMenu;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject fullMainMenu;
     [SerializeField] GameObject characterSelectionMenu;
+    public GameObject activeMenu;
 
-    [SerializeField] List<Item> possibleItems;
-
-    public GameObject playerSpawnPos;
-
+    [Header("--- Enemy Components ---")]
     [SerializeField] int enemiesRemain;
+
+    [Header("--- Store Components ---")]
+    [SerializeField] List<Item> possibleItems;
     public List<Item> storeItems;
     public List<GameObject> storeCards;
+<<<<<<< Updated upstream
 
     public List<character> characterList;
     public List<gunStats> gunList;
@@ -42,6 +46,9 @@ public class gamemanager : MonoBehaviour
     [SerializeField] TMP_Text currentWaveRemainingText;
 
 
+=======
+    public Item coin;
+>>>>>>> Stashed changes
 
     bool isPaused;
     bool pickup;
@@ -86,11 +93,6 @@ public class gamemanager : MonoBehaviour
         activeMenu.SetActive(isPaused);
         activeMenu = null;
     }
-    //public void togglePickup(bool state)
-    //{
-    //pickup = state;
-    //pickupOption.SetActive(pickup);
-    //}
     public void toggleStore(bool state)
     {
         if (state)
