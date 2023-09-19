@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu]
 
-public class gunStats : ScriptableObject
+public class gun : ScriptableObject
 {
     // Gun Stats
     public float shootRate;

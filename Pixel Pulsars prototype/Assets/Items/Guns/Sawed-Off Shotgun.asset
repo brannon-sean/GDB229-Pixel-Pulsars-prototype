@@ -9,15 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a305605318190747a9ff47aa9976f84, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b71117ea5768364a82c3ea297f3ff11, type: 3}
   m_Name: Sawed-Off Shotgun
   m_EditorClassIdentifier: 
-  gunName: Sawed-Off Shotgun
-  shootRate: 1.5
-  shootDamage: 6
-  shootDistance: 25
-  ammoCurrent: 2
-  ammoMax: 2
-  model: {fileID: 1457091908272982, guid: 5fb00c8822a8e7f43a78ba89a7971e2f, type: 3}
-  hitEffect: {fileID: 0}
-  shootSound: {fileID: 0}
+  shootRate: 0
+  shootDamage: 0
+  shootDistance: 0
+  currentAmmo: 0
+  maxAmmo: 0
+  gunModel: {fileID: 0}
+  hitEff: {fileID: 0}
+  shotSound: {fileID: 0}
