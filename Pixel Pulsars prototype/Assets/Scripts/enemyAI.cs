@@ -5,37 +5,28 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour, IDamage, IPhysics
 {
-    [Header("--------- Components --------")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPosition;
     [SerializeField] Transform headPos;
 
-    [Header("--------- Enemy Stats --------")]
     [SerializeField] int healthPoints;
     [SerializeField] int targetFaceSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
- 
-    [Header("--------- Gun Stats --------")]
+
     [SerializeField] float shootRate;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject loot;
 
-    [Header("--------- Debug --------")]
     private Vector3 playerDirection;
     private bool playerInRange;
     private bool isShooting;
     private float stoppingDistOrig;
     private float angleToPlayer;
-    bool destinationChosen;
-    Vector3 startingPosition;
 
     void Start()
     {
-        startingPosition = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
         gamemanager.instance.updateGameGoal(1);
     }
@@ -43,39 +34,17 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     {
         if (playerInRange && canSeePlayer())
         {
-            StartCoroutine(roam());
+           
         }
-        else if(!playerInRange)
-        {
-            StartCoroutine(roam());
-        }
-    }
-
-    IEnumerator roam()
-    {
-        if (agent.remainingDistance < 0.05f && !destinationChosen)
-        {
-            destinationChosen = true;
-            agent.stoppingDistance = 0;
-            yield return new WaitForSeconds(roamPauseTime);
-            destinationChosen = false;
-
-            Vector3 randomPos = Random.insideUnitSphere * roamDist;
-            randomPos += startingPosition;
-
-            NavMeshHit hit;
-            NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
-            agent.SetDestination(hit.position);
-
-            destinationChosen = false;
-        }
-
     }
 
     bool canSeePlayer()
     {
         playerDirection = gamemanager.instance.player.transform.position - (transform.position - Vector3.down);
         angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0, playerDirection.z), transform.forward);
+
+        Debug.Log(angleToPlayer);
+        Debug.DrawRay(headPos.position, playerDirection);
 
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDirection, out hit))
@@ -148,7 +117,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            agent.stoppingDistance = 0;
         }
     }
     public void physics(Vector3 push)

@@ -12,5 +12,5 @@ public class character : ScriptableObject
     public int jumpsMax;
 
     [Header("---- Gun Assignment ----")]
-    public gunStats gunPrefab;
+    public gun gunPrefab;
 }

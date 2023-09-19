@@ -53,7 +53,6 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     void Update()
     {
         movement();
-        Sprint();
 
         if (Input.GetButtonDown("Shoot") && !isShooting)
         {
@@ -111,19 +110,19 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         controller.Move((playerVelocity + pushBack) * Time.deltaTime);
     }
 
-    void Sprint()
-    {
-       float basePlayerSpeed = playerSpeed;
-    
-       if (Input.GetKey(KeyCode.LeftShift))
-       {
-            setPlayerSpeed(runSpeed);
-       }
-       else
-       {
-            setPlayerSpeed(baseSpeed);
-       }
-    }
+    //void Sprint()
+    //{
+    //   float basePlayerSpeed = playerSpeed;
+    //
+    //   if (Input.GetKey(KeyCode.LeftShift))
+    //   {
+    //        setPlayerSpeed(runSpeed);
+    //   }
+    //   else
+    //   {
+    //        setPlayerSpeed(baseSpeed);
+    //   }
+    //}
 
     IEnumerator shoot()
     {
@@ -147,14 +146,13 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void giveHealthPoints(int amount)
     {
         healthPoints += amount;
-        updatePlayerUI();
+        //updatePlayerUI();
     }
 
     public void takeDamage(int amount)
     {
         healthPoints -= amount;
-        updatePlayerUI();
-
+        //updatePlayerUI();
         StartCoroutine(gamemanager.instance.playerFlashDamage());
 
         if (healthPoints <= 0)
@@ -165,7 +163,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void spawnPlayer()
     {
         healthPoints = startHealth;
-        updatePlayerUI();
+        //updatePlayerUI();
         controller.enabled = false;
         transform.position = gamemanager.instance.playerSpawnPos.transform.position;
         controller.enabled = true;
@@ -218,19 +216,19 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
             pushBackResolve = pushBackResTemp;
         }
     }
-    public void setGunModel(gunStats model)
+    public void setGunModel(gun model)
     {
-        gunModel.GetComponent<MeshFilter>().sharedMesh = model.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<Renderer>().sharedMaterial = model.gunModel.GetComponent<Renderer>().sharedMaterial;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = model.model.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<Renderer>().sharedMaterial = model.model.GetComponent<Renderer>().sharedMaterial;
 
         shootDamage = model.shootDamage;
         shootDistance = model.shootDistance;
         shootRate = model.shootRate;
     }
 
-    public void updatePlayerUI()
-    {
-        gamemanager.instance.playerHPBar.fillAmount = (float)healthPoints / startHealth;
-    }
+    //public void updatePlayerUI()
+    //{
+    //    gamemanager.instance.playerHPBar.fillAmount = (float)healthPoints / startHealth;
+    //}
 
 }

@@ -611,8 +611,6 @@ MonoBehaviour:
   targetFaceSpeed: 2
   viewAngle: 90
   shootAngle: 1
-  roamDist: 5
-  roamPauseTime: 2
   shootRate: 1.5
   bullet: {fileID: 6568610698451559880, guid: 5fadd8296df868f499fb460bff548489, type: 3}
   loot: {fileID: 5460856503541291857, guid: a9b2e85753280be4ba14e98037b55ac0, type: 3}

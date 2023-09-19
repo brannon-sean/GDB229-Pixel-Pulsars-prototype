@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class gamemanager : MonoBehaviour
 {
@@ -33,13 +32,11 @@ public class gamemanager : MonoBehaviour
     public List<GameObject> storeCards;
 
     public List<character> characterList;
-    public List<gunStats> gunList;
+    public List<gun> gunList;
 
-    // UI Changes
+    // Player Stats
     public Image playerHPBar;
     [SerializeField] GameObject playerDamageFlash;
-    [SerializeField] TMP_Text enemiesRemainingText;
-    [SerializeField] TMP_Text currentWaveRemainingText;
 
 
 
@@ -159,9 +156,6 @@ public class gamemanager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         enemiesRemain += amount;
-
-        enemiesRemainingText.text = enemiesRemain.ToString("0");
-
         if(enemiesRemain <= 0)
         {
             StartCoroutine(youWinMenu());
