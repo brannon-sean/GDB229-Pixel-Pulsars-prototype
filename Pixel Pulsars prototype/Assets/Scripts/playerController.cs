@@ -26,6 +26,8 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] float leanSpeed;
     [SerializeField] float leanMaxAngle;
     [SerializeField] Vector3 pushBack;
+    [SerializeField] int maxStamina;
+
 
 
     //Variable Defintions: 
@@ -39,6 +41,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private int pushBackResTemp;
     private float baseSpeed = 6;
     private bool isSprinting;
+    private ParticleSystem gunshotEffect;
 
 
 
@@ -59,6 +62,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 
         if (Input.GetButtonDown("Shoot") && !isShooting)
         {
+            gunshotEffect.Play();
             StartCoroutine(shoot());
         }
     }
@@ -158,9 +162,8 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     IEnumerator shoot()
     {
         isShooting = true;
-
-        Instantiate(bulletFlash, bulletSpawn.transform.position, transform.rotation);
         RaycastHit hit;
+
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDistance))
         {
             IDamage damagable = hit.collider.GetComponent<IDamage>();
@@ -172,6 +175,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+        gunshotEffect.Stop();
     }
 
     public void giveHealthPoints(int amount)
@@ -244,9 +248,9 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     }
     public void setGunModel(gun model)
     {
-        gunModel.GetComponent<MeshFilter>().sharedMesh = model.model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<Renderer>().sharedMaterial = model.model.GetComponent<Renderer>().sharedMaterial;
-
+        GameObject spawnedGun = Instantiate(model.model, gunModel.transform.position, gunModel.transform.rotation);
+        spawnedGun.transform.parent = gunModel.transform;
+        gunshotEffect = gunModel.GetComponentInChildren<ParticleSystem>();
         shootDamage = model.shootDamage;
         shootDistance = model.shootDistance;
         shootRate = model.shootRate;

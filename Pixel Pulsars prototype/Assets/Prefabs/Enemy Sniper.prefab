@@ -607,13 +607,13 @@ MonoBehaviour:
   model: {fileID: 5154680490360636420}
   shootPosition: {fileID: 4387116744522153755}
   headPos: {fileID: 2430646237854598105}
-  healthPoints: 2
-  targetFaceSpeed: 2
-  viewAngle: 90
-  shootAngle: 1
-  shootRate: 1.5
   bullet: {fileID: 6568610698451559880, guid: 5fadd8296df868f499fb460bff548489, type: 3}
   loot: {fileID: 5460856503541291857, guid: a9b2e85753280be4ba14e98037b55ac0, type: 3}
+  healthPoints: 2
+  targetFaceSpeed: 2
+  viewAngle: 360
+  shootAngle: 1
+  shootRate: 1.5
 --- !u!195 &1857691005673970729
 NavMeshAgent:
   m_ObjectHideFlags: 0

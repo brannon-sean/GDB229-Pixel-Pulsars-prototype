@@ -18,6 +18,6 @@ MonoBehaviour:
   shootDistance: 25
   ammoCurrent: 2
   ammoMax: 2
-  model: {fileID: 1457091908272982, guid: 5fb00c8822a8e7f43a78ba89a7971e2f, type: 3}
+  model: {fileID: 2531004749081807613, guid: e1e10115c38d6144f9508a883f96907d, type: 3}
   hitEffect: {fileID: 0}
   shootSound: {fileID: 0}

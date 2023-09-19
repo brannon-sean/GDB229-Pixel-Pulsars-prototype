@@ -18,12 +18,11 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] int targetFaceSpeed;
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
-
     [SerializeField] float shootRate;
 
     //Variable Definitions:
     private Vector3 playerDirection;
-    private bool playerInRange;
+    private bool playerInRange = true;
     private bool isShooting;
     private float stoppingDistOrig;
     private float angleToPlayer;
@@ -108,20 +107,20 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * targetFaceSpeed);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        playerInRange = true;
+    //    }
+    //}
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        playerInRange = false;
+    //    }
+    //}
     public void physics(Vector3 push)
     {
         agent.velocity += push / 2;
