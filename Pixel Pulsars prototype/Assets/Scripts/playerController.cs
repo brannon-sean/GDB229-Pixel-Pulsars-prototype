@@ -17,6 +17,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public float playerSpeed;
     public float runSpeed;
     public int jumpsMax;
+    private float exhSpeed = 2;
     [SerializeField] float jumpHeight;
     [SerializeField] float gravityValue;
     [SerializeField] int pushBackResolve;
@@ -27,8 +28,12 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] float leanSpeed;
     [SerializeField] float leanMaxAngle;
     [SerializeField] Vector3 pushBack;
-    [SerializeField] int maxStamina;
     public float startHealth;
+    [SerializeField] int totalStamina;
+    public float playerStamina;
+    private WaitForSeconds tickRate = new WaitForSeconds(0.1f);
+    private bool isRegening;
+    private bool isExhausted;
 
     //Variable Defintions: 
     private Vector3 playerVelocity;
@@ -47,6 +52,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private void Start()
     {
         startHealth = healthPoints;
+        playerStamina = totalStamina;
         pushBackResTemp = pushBackResolve;
         gamemanager.instance.playerScript.spawnPlayer();
 
@@ -57,7 +63,6 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         movement();
         //lean();
         Sprint();
-        StaminaRegen();
 
         if (Input.GetButton("Shoot") && !isShooting)
         {
@@ -126,46 +131,110 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 
     void Sprint()
     {
-       float basePlayerSpeed = playerSpeed;
-
-       if (Input.GetKey(KeyCode.LeftShift))
-       {
-            setPlayerSpeed(runSpeed);
-            isSprinting = true;
-       }
-       else
-       {
-            setPlayerSpeed(baseSpeed);
-            isSprinting = false;
-       }
-    }
-
-    void StaminaRegen()
-    {
-        float playerStamina = maxStamina;
-
-        if (!isSprinting) 
+        if (playerStamina > 0)
         {
-            if (playerStamina <= maxStamina - 0.01)
+            if (Input.GetKey(KeyCode.LeftShift))
             {
-                playerStamina += 10 * Time.deltaTime;
+                setPlayerSpeed(runSpeed);
+                isSprinting = true;
+
+                if (isRegening == false)
+                {
+                    if (playerStamina > 0)
+                    {
+                        StartCoroutine(DrainStamina());
+                    }
+                    else if (playerStamina <= 0)
+                    {
+                        StopCoroutine(DrainStamina());
+                        playerStamina = 0;
+                    }
+                    else
+                    {
+                        Debug.Log("isSprinting");
+                    }
+                }
+                else if (isRegening == true)
+                {
+                    StopCoroutine(RegenStamina());
+                    StartCoroutine(DrainStamina());
+                }
             }
-        }
-        if (isSprinting)
-        {
-            if (playerStamina > 0.01)
+            else
             {
-                playerStamina -= 50 * Time.deltaTime;
-            }
-            if (playerStamina <= 0)
-            {
-                playerSpeed = baseSpeed;
+                StopCoroutine(DrainStamina());
+                setPlayerSpeed(baseSpeed);
                 isSprinting = false;
+
+                if (playerStamina < totalStamina)
+                {
+                    StartCoroutine(RegenStamina());
+                }
+                else
+                {
+                    Debug.Log("!isSprinting");
+                }
+
             }
         }
-        
+        else if (playerStamina <= 0)
+        {
+            StopCoroutine(RegenStamina());
+            StartCoroutine(StaminaBreak());
+        }
     }
-    
+
+
+    //void Stamina()
+    //{
+    //    if (playerStamina >= 0)
+    //    {
+    //            playerStamina -= 10 * Time.deltaTime;
+    //            gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
+    //    }
+    //    else
+    //    {
+    //        
+    //    }
+    //}
+
+    IEnumerator DrainStamina()
+    {
+        isRegening = false;
+
+        while ((playerStamina >= 0) && isSprinting)
+        {
+            playerStamina -= 2 * Time.deltaTime;
+            gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
+            yield return tickRate;
+        }
+    }
+
+    IEnumerator RegenStamina()
+    {
+        isRegening = true;
+        while((playerStamina < totalStamina) && !isSprinting)
+        {
+            playerStamina += 2 * Time.deltaTime;
+            gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
+            yield return tickRate;
+        }
+    }
+
+    IEnumerator StaminaBreak()
+    {
+        isExhausted = true;
+
+        setPlayerSpeed(exhSpeed);
+        yield return new WaitForSeconds(5);
+
+        setPlayerSpeed(baseSpeed);
+        playerStamina = totalStamina;
+        gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
+
+        isExhausted = false;
+    }
+
     IEnumerator shoot()
     {
         isShooting = true;
