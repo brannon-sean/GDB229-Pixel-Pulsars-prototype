@@ -27,8 +27,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] float leanMaxAngle;
     [SerializeField] Vector3 pushBack;
     [SerializeField] int maxStamina;
-
-
+    public int startHealth;
 
     //Variable Defintions: 
     private Vector3 playerVelocity;
@@ -37,7 +36,6 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private int jumpedTimes;
     private bool isShooting;
     private float currentLeanAngle = 0f;
-    private int startHealth;
     private int pushBackResTemp;
     private float baseSpeed = 6;
     private bool isSprinting;
@@ -60,7 +58,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         Sprint();
         StaminaRegen();
 
-        if (Input.GetButtonDown("Shoot") && !isShooting)
+        if (Input.GetButton("Shoot") && !isShooting)
         {
             gunshotEffect.Play();
             StartCoroutine(shoot());
@@ -236,10 +234,19 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     {
         jumpsMax = amount;
     }
+    public void addShootRate(float amount)
+    {
+        shootRate -= amount;
+    }
+    public void setShootRate(float amount)
+    {
+        shootRate = amount;
+    }
 
     public void addPlayerHealth(int amount)
     {
         healthPoints += amount;
+        startHealth += amount;
     }
     public void setPlayerHealth(int amount)
     {

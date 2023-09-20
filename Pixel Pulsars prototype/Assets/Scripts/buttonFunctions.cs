@@ -35,22 +35,17 @@ public class buttonFunctions : MonoBehaviour
         playerInventory inventory = gamemanager.instance.player.GetComponent<playerInventory>();
         if (inventory != null)
         {
-            if (inventory.hasEnough(gamemanager.instance.coin, gamemanager.instance.storeItems[card].price))
-            {
-                inventory.addItem(gamemanager.instance.storeItems[card], 1);
-                inventory.removeItem(gamemanager.instance.coin, 5);
-                gamemanager.instance.storeCards[card].SetActive(false);
+            inventory.addItem(gamemanager.instance.storeItems[card], 1);
+            inventory.removeItem(gamemanager.instance.coin, 5);
+            gamemanager.instance.storeCards[card].SetActive(false);
 
-                //Update stats
-                gamemanager.instance.playerScript.addPlayerDamage(gamemanager.instance.storeItems[card].damage);
-                gamemanager.instance.playerScript.addPlayerSeed(gamemanager.instance.storeItems[card].speed);
-                gamemanager.instance.playerScript.addPlayerJumps(gamemanager.instance.storeItems[card].jumps);
-                gamemanager.instance.playerScript.addPlayerHealth(gamemanager.instance.storeItems[card].health);
-            }
-            else 
-            {
-                Debug.Log("Player does not have enough");
-            }
+            //Update stats
+            gamemanager.instance.playerScript.addPlayerDamage(gamemanager.instance.storeItems[card].damage);
+            gamemanager.instance.playerScript.addPlayerSeed(gamemanager.instance.storeItems[card].speed);
+            gamemanager.instance.playerScript.addPlayerJumps(gamemanager.instance.storeItems[card].jumps);
+            gamemanager.instance.playerScript.addPlayerHealth(gamemanager.instance.storeItems[card].health);
+            gamemanager.instance.playerScript.addShootRate(gamemanager.instance.storeItems[card].attackSpeed);
+            gamemanager.instance.toggleStore(false);
         }
     }
     public void selectCharacter(int character)

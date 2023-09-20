@@ -59,6 +59,8 @@ MonoBehaviour:
   viewAngle: 360
   shootAngle: 1
   shootRate: 1
+  experienceMin: 3
+  experienceMax: 7
 --- !u!195 &7446783868754699741
 NavMeshAgent:
   m_ObjectHideFlags: 0

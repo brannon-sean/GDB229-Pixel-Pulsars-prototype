@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] int viewAngle;
     [SerializeField] int shootAngle;
     [SerializeField] float shootRate;
+    [SerializeField] int experienceMin;
+    [SerializeField] int experienceMax;
 
     //Variable Definitions:
     private Vector3 playerDirection;
@@ -45,8 +48,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         playerDirection = gamemanager.instance.player.transform.position - (transform.position - Vector3.down);
         angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0, playerDirection.z), transform.forward);
 
-        Debug.Log(angleToPlayer);
-        Debug.DrawRay(headPos.position, playerDirection);
+        //Debug.Log(angleToPlayer);
+        //Debug.DrawRay(headPos.position, playerDirection);
 
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDirection, out hit))
@@ -89,8 +92,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         if(healthPoints <= 0)
         {
             gamemanager.instance.updateGameGoal(-1);
-            GameObject newItem = Instantiate(loot, transform.position, Quaternion.identity);
-            newItem.transform.parent = null;
+            gamemanager.instance.addExperience(UnityEngine.Random.Range(experienceMin, experienceMax));
+            //GameObject newItem = Instantiate(loot, transform.position, Quaternion.identity);
+            //newItem.transform.parent = null;
             Destroy(gameObject);
         }
     }

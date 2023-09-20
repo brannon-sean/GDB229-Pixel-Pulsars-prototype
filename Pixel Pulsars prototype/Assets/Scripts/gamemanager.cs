@@ -14,6 +14,7 @@ public class gamemanager : MonoBehaviour
     public GameObject playerSpawnPos;
     public List<character> characterList;
     public List<gun> gunList;
+    [SerializeField] int experienceToNextLevel;
 
     [Header("--- UI Components ---")]
     public List<Image> inventoryItems;
@@ -21,6 +22,7 @@ public class gamemanager : MonoBehaviour
     public Item coin;
     public GameObject activeMenu;
     public Image playerHPBar;
+    [SerializeField] Image levelBar;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject winMenu;
     [SerializeField] GameObject loseMenu;
@@ -43,6 +45,9 @@ public class gamemanager : MonoBehaviour
     //Variable definitions:
     bool isPaused;
     bool pickup;
+    private int experience;
+    private int level;
+    
 
 
     void Awake()
@@ -52,6 +57,7 @@ public class gamemanager : MonoBehaviour
         playerScript = player.GetComponent<playerController>();
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
         Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     void Update()
@@ -181,11 +187,30 @@ public class gamemanager : MonoBehaviour
                storeCard card = storeCards[i].GetComponent<storeCard>();
                 card.title.text = item.itemName;
                 card.description.text = item.description;
-                card.price.text = item.price.ToString();
+                //card.price.text = item.price.ToString();
                 card.sprite.sprite = item.sprite;
             }
             i++;
         }
     }
-
+    public void addExperience(int amount)
+    {
+        experience += amount;
+        levelBar.fillAmount = (float)experience / experienceToNextLevel;
+        if (experience >= experienceToNextLevel)
+        {
+            level++;
+            experienceToNextLevel = (int)(experienceToNextLevel * 1.3);
+            levelUp();
+        }
+    }
+    public void levelUp()
+    {
+        updateStoreMenu();
+        toggleStore(true);
+        experience = 0;
+        levelBar.fillAmount = 0;
+        playerScript.healthPoints = playerScript.startHealth;
+        playerScript.updatePlayerUI();
+    }
 }

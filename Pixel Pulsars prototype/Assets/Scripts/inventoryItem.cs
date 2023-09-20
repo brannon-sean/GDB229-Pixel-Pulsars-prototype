@@ -11,4 +11,5 @@ public class Item : ScriptableObject
     public int damage;
     public int jumps;
     public int health;
+    public float attackSpeed;
 }
