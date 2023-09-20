@@ -32,6 +32,8 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject characterSelectionMenu;
     [SerializeField] GameObject playerDamageFlash;
     public TMP_Text waveTimerText;
+    public TMP_Text buyTimerText;
+    public TMP_Text waveNumberText;
 
     [Header("--- Store Components ---")]
     public List<Item> storeItems;

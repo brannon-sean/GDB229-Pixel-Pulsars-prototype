@@ -24,7 +24,9 @@ public class spawnManager : MonoBehaviour
     [SerializeField] int mediumEnemySpawnCount;
     [SerializeField] int bossEnemySpawnCount;
     [SerializeField] int timeToCompleteWave;
+    [SerializeField] int timeToNextWave;
     private float timeLeftinWave;
+    private int waveNumber = 1;
 
     //Variable definitions:
     private int previousEnemySpawnCount;
@@ -38,8 +40,10 @@ public class spawnManager : MonoBehaviour
     {
         if (!waveSpawned)
         {
+
             StartCoroutine(waveSpawner());
             StartCoroutine(WaveTimer());
+
         }
     }
 
@@ -106,6 +110,8 @@ public class spawnManager : MonoBehaviour
         bossEnemySpawnCount = (int)(previousBossSpawnCount * scaler);
         waveSize = (int)(previousWaveSize * scaler);
         wave++;
+        waveNumber++;
+        gamemanager.instance.waveNumberText.text = waveNumber.ToString("0");
         waveSpawned = false;
     }
 
@@ -115,10 +121,10 @@ public class spawnManager : MonoBehaviour
         while (timeLeftinWave > 0)
         {
             gamemanager.instance.waveTimerText.text = timeLeftinWave.ToString("0");
-            
-
             timeLeftinWave -= Time.deltaTime;
             yield return null;
         }
     }
+
+
 }
