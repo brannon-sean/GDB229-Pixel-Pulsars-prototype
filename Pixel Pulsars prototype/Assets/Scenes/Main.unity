@@ -1533,7 +1533,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -803.75, y: 483.5}
+  m_AnchoredPosition: {x: -829.5, y: -433}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &167220465
@@ -9502,12 +9502,13 @@ MonoBehaviour:
   spawnRadiusMax: 50
   spawnRadiusMin: 25
   waveSize: 7
-  scaleMin: 1.2
-  scaleMax: 1.4
+  scaleMin: 1.1
+  scaleMax: 1.1
   enemySpawnCount: 10
   mediumEnemySpawnCount: 4
   bossEnemySpawnCount: 1
-  timeToCompleteWave: 15
+  timeToCompleteWave: 45
+  timeToNextWave: 0
 --- !u!1 &839181062
 GameObject:
   m_ObjectHideFlags: 0
@@ -17506,7 +17507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: possibleItems.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: storeCards.Array.data[0]
@@ -17592,6 +17593,10 @@ PrefabInstance:
       propertyPath: possibleItems.Array.data[4]
       value: 
       objectReference: {fileID: 11400000, guid: 0f4035a88f1553a40b037132b6675477, type: 2}
+    - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
+      propertyPath: possibleItems.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: c01a53d3734650e43a84f110b8e33eb5, type: 2}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: inventoryItems.Array.data[0]
       value: 

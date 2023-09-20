@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: Sawed-Off Shotgun
   shootRate: 1.5
-  shootDamage: 6
+  shootDamage: 3
   shootDistance: 25
   ammoCurrent: 2
   ammoMax: 2

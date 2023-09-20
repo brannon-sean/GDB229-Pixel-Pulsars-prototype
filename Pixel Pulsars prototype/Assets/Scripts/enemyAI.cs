@@ -48,9 +48,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         playerDirection = gamemanager.instance.player.transform.position - (transform.position - Vector3.down);
         angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0, playerDirection.z), transform.forward);
 
-        //Debug.Log(angleToPlayer);
-        //Debug.DrawRay(headPos.position, playerDirection);
-
         RaycastHit hit;
         if (Physics.Raycast(headPos.position, playerDirection, out hit))
         {
@@ -93,8 +90,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         {
             gamemanager.instance.updateGameGoal(-1);
             gamemanager.instance.addExperience(UnityEngine.Random.Range(experienceMin, experienceMax));
-            //GameObject newItem = Instantiate(loot, transform.position, Quaternion.identity);
-            //newItem.transform.parent = null;
             Destroy(gameObject);
         }
     }
@@ -110,21 +105,6 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         Quaternion rotation = Quaternion.LookRotation(playerDirection);
         transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.deltaTime * targetFaceSpeed);
     }
-
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        playerInRange = true;
-    //    }
-    //}
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        playerInRange = false;
-    //    }
-    //}
     public void physics(Vector3 push)
     {
         agent.velocity += push / 2;

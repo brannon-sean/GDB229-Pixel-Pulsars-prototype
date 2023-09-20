@@ -55,10 +55,10 @@ MonoBehaviour:
   bullet: {fileID: 6568610698451559880, guid: 5fadd8296df868f499fb460bff548489, type: 3}
   loot: {fileID: 5460856503541291857, guid: a9b2e85753280be4ba14e98037b55ac0, type: 3}
   healthPoints: 3
-  targetFaceSpeed: 2
+  targetFaceSpeed: 3
   viewAngle: 360
-  shootAngle: 1
-  shootRate: 1
+  shootAngle: 5
+  shootRate: 0.7
   experienceMin: 3
   experienceMax: 7
 --- !u!195 &7446783868754699741

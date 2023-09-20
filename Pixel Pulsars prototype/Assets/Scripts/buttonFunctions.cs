@@ -45,6 +45,8 @@ public class buttonFunctions : MonoBehaviour
             gamemanager.instance.playerScript.addPlayerJumps(gamemanager.instance.storeItems[card].jumps);
             gamemanager.instance.playerScript.addPlayerHealth(gamemanager.instance.storeItems[card].health);
             gamemanager.instance.playerScript.addShootRate(gamemanager.instance.storeItems[card].attackSpeed);
+            gamemanager.instance.playerScript.addPlayerLifesteal(gamemanager.instance.storeItems[card].lifeSteal);
+            gamemanager.instance.playerScript.addPlayerShootDistance(gamemanager.instance.storeItems[card].shootDistance);
             gamemanager.instance.toggleStore(false);
         }
     }

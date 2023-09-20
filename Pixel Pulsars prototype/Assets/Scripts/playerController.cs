@@ -13,7 +13,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] GameObject gunModel;
 
     [Header("--- Player Stats ---")]
-    public int healthPoints;
+    public float healthPoints;
     public float playerSpeed;
     public float runSpeed;
     public int jumpsMax;
@@ -23,11 +23,12 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] float shootRate;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDistance;
+    [SerializeField] float lifeSteal;
     [SerializeField] float leanSpeed;
     [SerializeField] float leanMaxAngle;
     [SerializeField] Vector3 pushBack;
     [SerializeField] int maxStamina;
-    public int startHealth;
+    public float startHealth;
 
     //Variable Defintions: 
     private Vector3 playerVelocity;
@@ -60,7 +61,15 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 
         if (Input.GetButton("Shoot") && !isShooting)
         {
-            gunshotEffect.Play();
+            try
+            {
+                gunshotEffect.Play();
+            }
+            catch
+            {
+
+            }
+            
             StartCoroutine(shoot());
         }
     }
@@ -168,6 +177,18 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
             if (damagable != null)
             {
                 damagable.takeDamage(shootDamage);
+                if(startHealth >= healthPoints + (shootDamage * lifeSteal))
+                {
+                    healthPoints += shootDamage * lifeSteal;
+                    updatePlayerUI();
+                }
+                else if(startHealth <= healthPoints + (shootDamage * lifeSteal))
+                {
+                    float healToFull = startHealth - healthPoints;
+                    healthPoints += healToFull;
+                    updatePlayerUI();
+                }
+                
             }
         }
 
@@ -251,6 +272,14 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void setPlayerHealth(int amount)
     {
         healthPoints = amount;
+    }
+    public void addPlayerLifesteal(float amount)
+    {
+        lifeSteal += amount;
+    }
+    public void addPlayerShootDistance(int amount)
+    {
+        shootDistance += amount;
     }
     public void airLiftToggle()
     {

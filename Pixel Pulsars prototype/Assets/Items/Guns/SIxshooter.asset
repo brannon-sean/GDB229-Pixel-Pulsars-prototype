@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunName: Six-Shooter
   shootRate: 0.5
-  shootDamage: 3
+  shootDamage: 1
   shootDistance: 25
   ammoCurrent: 6
   ammoMax: 6
