@@ -9501,9 +9501,9 @@ MonoBehaviour:
   - {fileID: 3694073916709355415, guid: 8bc003a616a61e1448369cb1d152f713, type: 3}
   spawnRadiusMax: 50
   spawnRadiusMin: 25
-  waveSize: 7
+  waveSize: 6
   scaleMin: 1.1
-  scaleMax: 1.1
+  scaleMax: 1.2
   enemySpawnCount: 10
   mediumEnemySpawnCount: 4
   bossEnemySpawnCount: 1
@@ -17471,7 +17471,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: experienceToNextLevel
-      value: 50
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: gunList.Array.data[0]
@@ -17507,7 +17507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: possibleItems.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: storeCards.Array.data[0]
@@ -17597,6 +17597,10 @@ PrefabInstance:
       propertyPath: possibleItems.Array.data[5]
       value: 
       objectReference: {fileID: 11400000, guid: c01a53d3734650e43a84f110b8e33eb5, type: 2}
+    - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
+      propertyPath: possibleItems.Array.data[6]
+      value: 
+      objectReference: {fileID: 11400000, guid: 66604f8315ba3c34ea67dae71e15644b, type: 2}
     - target: {fileID: 7737259370417885735, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: inventoryItems.Array.data[0]
       value: 
