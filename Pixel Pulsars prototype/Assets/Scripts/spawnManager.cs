@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -23,6 +24,7 @@ public class spawnManager : MonoBehaviour
     [SerializeField] int mediumEnemySpawnCount;
     [SerializeField] int bossEnemySpawnCount;
     [SerializeField] int timeToCompleteWave;
+    private float timeLeftinWave;
 
     //Variable definitions:
     private int previousEnemySpawnCount;
@@ -37,6 +39,7 @@ public class spawnManager : MonoBehaviour
         if (!waveSpawned)
         {
             StartCoroutine(waveSpawner());
+            StartCoroutine(WaveTimer());
         }
     }
 
@@ -96,6 +99,7 @@ public class spawnManager : MonoBehaviour
         spawnWave();
         waveSpawned = true;
         yield return new WaitForSeconds(timeToCompleteWave);
+
         float scaler = Random.Range(scaleMin, scaleMax);
         enemySpawnCount = (int)(previousEnemySpawnCount * scaler);
         mediumEnemySpawnCount = (int)(previousMediumSpawnCount * scaler);
@@ -103,5 +107,18 @@ public class spawnManager : MonoBehaviour
         waveSize = (int)(previousWaveSize * scaler);
         wave++;
         waveSpawned = false;
+    }
+
+    IEnumerator WaveTimer()
+    {
+        timeLeftinWave = timeToCompleteWave;
+        while (timeLeftinWave > 0)
+        {
+            gamemanager.instance.waveTimerText.text = timeLeftinWave.ToString("0");
+            
+
+            timeLeftinWave -= Time.deltaTime;
+            yield return null;
+        }
     }
 }

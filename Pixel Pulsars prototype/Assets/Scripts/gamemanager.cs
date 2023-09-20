@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class gamemanager : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class gamemanager : MonoBehaviour
     [SerializeField] GameObject fullMainMenu;
     [SerializeField] GameObject characterSelectionMenu;
     [SerializeField] GameObject playerDamageFlash;
+    public TMP_Text waveTimerText;
 
     [Header("--- Store Components ---")]
     public List<Item> storeItems;
@@ -154,7 +156,8 @@ public class gamemanager : MonoBehaviour
     public void updateGameGoal(int amount)
     {
         enemiesRemain += amount;
-        if(enemiesRemain <= 0)
+
+        if (enemiesRemain <= 0)
         {
             StartCoroutine(youWinMenu());
         }
@@ -184,4 +187,5 @@ public class gamemanager : MonoBehaviour
             i++;
         }
     }
+
 }
