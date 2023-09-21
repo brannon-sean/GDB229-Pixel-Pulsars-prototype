@@ -223,4 +223,11 @@ public class gamemanager : MonoBehaviour
         playerScript.healthPoints = playerScript.startHealth;
         playerScript.updatePlayerUI();
     }
+
+    public IEnumerator playerFlashDamage()
+    {
+        playerDamageFlash.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        playerDamageFlash.SetActive(false);
+    }
 }

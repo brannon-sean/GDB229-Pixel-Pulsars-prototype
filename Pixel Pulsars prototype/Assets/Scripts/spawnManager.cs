@@ -112,7 +112,7 @@ public class spawnManager : MonoBehaviour
         waveSize = (int)(previousWaveSize * scaler);
         wave++;
         waveNumber++;
-        //gamemanager.instance.waveNumberText.text = waveNumber.ToString("0");
+        gamemanager.instance.waveNumberText.text = waveNumber.ToString("0");
         waveSpawned = false;
     }
 
