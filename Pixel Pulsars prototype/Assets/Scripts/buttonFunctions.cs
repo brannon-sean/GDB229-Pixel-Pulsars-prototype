@@ -58,9 +58,11 @@ public class buttonFunctions : MonoBehaviour
 
         gamemanager.instance.playerScript.setGunModel(gamemanager.instance.characterList[character].gunPrefab);
         gamemanager.instance.toggleCharacterSection(false);
+        gamemanager.instance.playerScript.amEnabled = true;
     }
     public void startGame()
     {
         gamemanager.instance.toggleMainMenu(false);
+        gamemanager.instance.toggleCharacterSection(true);
     }
 }

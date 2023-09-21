@@ -52,6 +52,7 @@ public class gamemanager : MonoBehaviour
     bool pickup;
     private int experience;
     private int level;
+    private bool characterSelected;
     
 
 
@@ -67,10 +68,17 @@ public class gamemanager : MonoBehaviour
     private void Start()
     {
         addExperience(0);
+        
     }
 
     void Update()
     {
+        if (!characterSelected)
+        {
+            toggleFullMainMenu(true);
+            characterSelected = true;
+        }
+
         if (Input.GetButtonDown("Cancel") && activeMenu == null)
         {
             statePause();
@@ -121,23 +129,32 @@ public class gamemanager : MonoBehaviour
         if (state)
         {
             characterSelectionMenu.SetActive(state);
+            fullMainMenu.SetActive(state);
+            activeMenu = characterSelectionMenu;
+            statePause();
         }
         else
         {
             stateUnpause();
+            activeMenu = fullMainMenu;
             toggleFullMainMenu(false);
         }
     }
     //Deactivate main menu gameobject entirely.
     public void toggleFullMainMenu(bool state)
     {
-        Time.timeScale = 1;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        activeMenu = null;
-        isPaused = !isPaused;
-        fullMainMenu.SetActive(state);
-        stateUnpause();
+        if (state)
+        {
+            activeMenu = fullMainMenu;
+            fullMainMenu.SetActive(state);
+            statePause();
+            
+        }
+        else
+        {
+            stateUnpause();
+        }
+        
     }
     //Toggle main menu screen once character game is playing.
     public void toggleMainMenu(bool state)
@@ -222,12 +239,5 @@ public class gamemanager : MonoBehaviour
         levelBar.fillAmount = 0;
         playerScript.healthPoints = playerScript.startHealth;
         playerScript.updatePlayerUI();
-    }
-
-    public IEnumerator playerFlashDamage()
-    {
-        playerDamageFlash.SetActive(true);
-        yield return new WaitForSeconds(0.1f);
-        playerDamageFlash.SetActive(false);
     }
 }

@@ -5115,13 +5115,25 @@ PrefabInstance:
       value: UI
       objectReference: {fileID: 0}
     - target: {fileID: 2978806441733463335, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
+      propertyPath: waveSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2978806441733463335, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: timeToNextWave
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2978806441733463335, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: timeToCompleteWave
-      value: 10
+      value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 2978806441733463335, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
+      propertyPath: bossEnemySpawnList.Array.data[0]
+      value: 
+      objectReference: {fileID: 2137369627973543180, guid: 649d9d3d7b07ff649ba05f5f673709c6, type: 3}
+    - target: {fileID: 2978806441733463335, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
+      propertyPath: mediumEnemySpawnList.Array.data[0]
+      value: 
+      objectReference: {fileID: 3694073916709355415, guid: 8bc003a616a61e1448369cb1d152f713, type: 3}
     - target: {fileID: 3079360292674115154, guid: b15a8f96dbd60594683b2e4539b57a6f, type: 3}
       propertyPath: m_Pivot.x
       value: 0

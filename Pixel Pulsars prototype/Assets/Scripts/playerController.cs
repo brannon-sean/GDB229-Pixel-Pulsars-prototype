@@ -11,7 +11,6 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] GameObject bulletSpawn;
     [SerializeField] GameObject bulletFlash;
     [SerializeField] GameObject gunModel;
-    [SerializeField] GameObject playerDamageFlash;
 
     [Header("--- Player Stats ---")]
     public float healthPoints;
@@ -48,6 +47,8 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private ParticleSystem gunshotEffect;
     private float baseSpeedOrignal;
 
+    public bool amEnabled;
+
 
 
     private void Start()
@@ -62,9 +63,10 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     void Update()
     {
         movement();
+        //lean();
         Sprint();
 
-        if (Input.GetButton("Shoot") && !isShooting)
+        if (Input.GetButton("Shoot") && !isShooting && amEnabled)
         {
             gunshotEffect.Play();
             
@@ -238,7 +240,6 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void takeDamage(int amount)
     {
         healthPoints -= amount;
-        StartCoroutine(gamemanager.instance.playerFlashDamage());
         updatePlayerUI();
 
         if (healthPoints <= 0 && !gamemanager.instance.isPaused)
@@ -252,7 +253,6 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         gamemanager.instance.playerHPBar.fillAmount = (float)healthPoints / startHealth;
         gamemanager.instance.healthPointsText.text = healthPoints.ToString() + " / " + startHealth.ToString();
     }
-
 
     public void spawnPlayer()
     {
@@ -338,5 +338,4 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         shootDistance = model.shootDistance;
         shootRate = model.shootRate;
     }
-
 }

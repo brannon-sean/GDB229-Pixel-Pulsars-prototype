@@ -33,6 +33,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     private bool isShooting;
     private float stoppingDistOrig;
     private float angleToPlayer;
+    private bool isDead;
 
     void Start()
     {
@@ -52,32 +53,36 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     bool canSeePlayer()
     {
-        playerDirection = gamemanager.instance.player.transform.position - (transform.position - Vector3.down);
-        angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0, playerDirection.z), transform.forward);
-
-        RaycastHit hit;
-        if (Physics.Raycast(headPos.position, playerDirection, out hit))
+        if (!isDead)
         {
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            playerDirection = gamemanager.instance.player.transform.position - (transform.position - Vector3.down);
+            angleToPlayer = Vector3.Angle(new Vector3(playerDirection.x, 0, playerDirection.z), transform.forward);
+
+            RaycastHit hit;
+            if (Physics.Raycast(headPos.position, playerDirection, out hit))
             {
-                agent.stoppingDistance = stoppingDistOrig;
-                agent.SetDestination(gamemanager.instance.player.transform.position);
-
-                if (agent.remainingDistance <= agent.stoppingDistance)
+                if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
                 {
-                    faceTarget();
+                    agent.stoppingDistance = stoppingDistOrig;
+                    agent.SetDestination(gamemanager.instance.player.transform.position);
 
-                    if (!isShooting && angleToPlayer <= shootAngle)
+                    if (agent.remainingDistance <= agent.stoppingDistance)
                     {
-                        StartCoroutine(shoot());
-                    }
+                        faceTarget();
 
+                        if (!isShooting && angleToPlayer <= shootAngle)
+                        {
+                            StartCoroutine(shoot());
+                        }
+
+                    }
+                    return true;
                 }
-                return true;
             }
         }
-        agent.stoppingDistance = 0;
-        return false;
+            agent.stoppingDistance = 0;
+            return false;
+        
     }
 
     IEnumerator shoot()
@@ -96,6 +101,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         {
             agent.enabled = false;
             animator.SetBool("Dead", true);
+            isDead = true;
             gamemanager.instance.updateGameGoal(-1);
             gamemanager.instance.addExperience(UnityEngine.Random.Range(experienceMin, experienceMax));
 

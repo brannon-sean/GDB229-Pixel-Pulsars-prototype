@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2865047488303163240}
   - component: {fileID: 4613966593802944510}
   - component: {fileID: 7446783868754699741}
-  - component: {fileID: -3463209852165770382}
   - component: {fileID: 5792250014697372174}
   - component: {fileID: 389341450560565184}
   m_Layer: 7
@@ -51,7 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: 7446783868754699741}
   model: {fileID: 311842043972406772}
-  animator: {fileID: -3463209852165770382}
+  animator: {fileID: 353004924371194698}
   shootPosition: {fileID: 406500906210676874}
   headPos: {fileID: 412868604883132700}
   bullet: {fileID: 6568610698451559880, guid: 5fadd8296df868f499fb460bff548489, type: 3}
@@ -86,27 +85,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!95 &-3463209852165770382
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 347066694199084112}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 4837235d67e136e4b883adb2bafc73e8, type: 3}
-  m_Controller: {fileID: 9100000, guid: c6cfc2df63c29aa4ead56f363503e2d8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!135 &5792250014697372174
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -218,11 +196,11 @@ PrefabInstance:
     - target: {fileID: 95217205003396926, guid: e169e4d9dbd157b498e582065a5f9302, type: 3}
       propertyPath: m_Avatar
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9000000, guid: 4837235d67e136e4b883adb2bafc73e8, type: 3}
     - target: {fileID: 95217205003396926, guid: e169e4d9dbd157b498e582065a5f9302, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 9100000, guid: c6cfc2df63c29aa4ead56f363503e2d8, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -231,6 +209,11 @@ PrefabInstance:
 --- !u!137 &311842043972406772 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 137224820103428480, guid: e169e4d9dbd157b498e582065a5f9302, type: 3}
+  m_PrefabInstance: {fileID: 411067337955898484}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &353004924371194698 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95217205003396926, guid: e169e4d9dbd157b498e582065a5f9302, type: 3}
   m_PrefabInstance: {fileID: 411067337955898484}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &406500906210676874 stripped
