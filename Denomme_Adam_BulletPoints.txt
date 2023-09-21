@@ -7,12 +7,25 @@ Works in Scripts:
 - Created Reticle for UI
 - Recreated Features from Lecture 1
 - On Call Helping to Bug Fix Every commit that was put into the project (Everyone did this even if they did not work on the script itself.
+- Worked with Group in Call fixing every bug, especially the ones that came with the wave spawner and the enemy hitboxes/viewpoints after new models were added
+- Created Rifleman and Sniper
+- Added Animations and Scripts for Animations (Want to go onto blender and create own animations
+- Made Skybox with Sage
+- Created Sprint/Stamina Function
+- Created UI for HP, Stamina, EXP (Text)
+- Created UI for damage flash
+- Pushed in Audio
+- Made Audio Scripts
+- Added Coroutine to CleanUp Dead Enemies
+- Added Wave Timer and Wave Count
 
-(Work in Scripts were divided by Lectures they were taught in)
+(Almost Every part of the work was done together in discord calls, the last few hours of commits were only done by Sage but worked on by everybody because GitHub messed up when 2 computers pushed in hundreds of Unity Store Assets another person uninstalled by accident but also pushed back) in at the same time.
 
-Works in Level:
+Goals for Next Part of the Project on my end:
 
-- Made Entire Level (Placed Assets, Created Building, Set Spawn Point)
-- Made Nav Mesh for Level
-
-(Wanted to keep things simple, but showcase everything that was worked on one floor at a time)
+- Add Death Barrier Outside of Map or Function to Teleport Player back to spawnPoint for when player gets shoved off the map
+- Clean Up Inventory UI to make it not seem like useable items
+- Make Level Up Screen/Menu Similar to how baldurs gate and WoW have a plus button on the bottom that you can click on at anytime
+- Add Time between waves (Fun Fact: I got this to work but it was corrupted when the github disaster corrupted)
+- Add Animation to MachineGunner Boss. (I want to go into Unity or Blender and create both a running animation where he lifts up and puts down the handles to the gun, and I want to make an idle animation where he leans over and rests on the gun a bit.
+- Add Ammo, Reload, and Reload Animation
