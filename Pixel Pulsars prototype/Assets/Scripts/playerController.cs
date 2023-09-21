@@ -31,7 +31,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public float startHealth;
     [SerializeField] int totalStamina;
     public float playerStamina;
-    private WaitForSeconds tickRate = new WaitForSeconds(0.1f);
+    private float tickRate = .1f;
     private bool isRegening;
     private bool isExhausted;
 
@@ -41,11 +41,11 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     private Vector3 move;
     private int jumpedTimes;
     private bool isShooting;
-    private float currentLeanAngle = 0f;
     private int pushBackResTemp;
-    private float baseSpeed = 6;
+    [SerializeField] float baseSpeed = 6;
     private bool isSprinting;
     private ParticleSystem gunshotEffect;
+    private float baseSpeedOrignal;
 
 
 
@@ -66,34 +66,12 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 
         if (Input.GetButton("Shoot") && !isShooting)
         {
-            try
-            {
-                gunshotEffect.Play();
-            }
-            catch
-            {
-
-            }
+            gunshotEffect.Play();
             
             StartCoroutine(shoot());
         }
     }
 
-    void lean()
-    {
-        if ( Input.GetKey(KeyCode.Q))
-        {
-            currentLeanAngle = Mathf.MoveTowardsAngle(currentLeanAngle, leanMaxAngle, leanSpeed * Time.deltaTime); 
-        } else if (Input.GetKey(KeyCode.E))
-        {
-            currentLeanAngle = Mathf.MoveTowardsAngle(currentLeanAngle, leanMaxAngle, leanSpeed * Time.deltaTime);
-        }
-        else
-        {
-            currentLeanAngle = Mathf.MoveTowardsAngle(currentLeanAngle, 0, leanSpeed * Time.deltaTime);
-        }
-        transform.localRotation = Quaternion.AngleAxis(currentLeanAngle, Vector3.forward);
-    }
     void movement()
     {
 
@@ -115,7 +93,15 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         move = Input.GetAxis("Horizontal") * transform.right +
             Input.GetAxis("Vertical") * transform.forward;
 
-        controller.Move(move * Time.deltaTime * playerSpeed);
+        if (isExhausted)
+        {
+            controller.Move(move * Time.deltaTime * (baseSpeed - exhSpeed));
+        }
+        else
+        {
+            controller.Move(move * Time.deltaTime * (baseSpeed + runSpeed));
+        }
+        
 
 
         // Changes the height position of the player..
@@ -133,106 +119,82 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     {
         if (playerStamina > 0)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetButton("Sprint"))
             {
-                setPlayerSpeed(runSpeed);
-                isSprinting = true;
+                if (!isSprinting)
+                {
+                    runSpeed = baseSpeed * 2;
+                    isSprinting = true;
+                }
 
-                if (isRegening == false)
+                if (!isRegening)
                 {
                     if (playerStamina > 0)
                     {
-                        StartCoroutine(DrainStamina());
+                        StartCoroutine(DrainStamina());  // 1
                     }
                     else if (playerStamina <= 0)
                     {
                         StopCoroutine(DrainStamina());
                         playerStamina = 0;
                     }
-                    else
-                    {
-                        Debug.Log("isSprinting");
-                    }
-                }
-                else if (isRegening == true)
-                {
-                    StopCoroutine(RegenStamina());
-                    StartCoroutine(DrainStamina());
                 }
             }
             else
             {
                 StopCoroutine(DrainStamina());
-                setPlayerSpeed(baseSpeed);
+                runSpeed = runSpeed / 2;
                 isSprinting = false;
 
-                if (playerStamina < totalStamina)
+                if (playerStamina < totalStamina && !isRegening)
                 {
                     StartCoroutine(RegenStamina());
                 }
-                else
-                {
-                    Debug.Log("!isSprinting");
-                }
-
             }
+        }
+        else if (isExhausted)
+        {
+            isSprinting = false;
+            StartCoroutine(RegenStamina());
         }
         else if (playerStamina <= 0)
         {
-            StopCoroutine(RegenStamina());
             StartCoroutine(StaminaBreak());
             StopCoroutine(StaminaBreak());
         }
+        gamemanager.instance.stanimaText.text = ((int)playerStamina).ToString() + " / " + totalStamina.ToString();
     }
-
-
-    //void Stamina()
-    //{
-    //    if (playerStamina >= 0)
-    //    {
-    //            playerStamina -= 10 * Time.deltaTime;
-    //            gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
-    //    }
-    //    else
-    //    {
-    //        
-    //    }
-    //}
 
     IEnumerator DrainStamina()
     {
-        isRegening = false;
-
-        while ((playerStamina >= 0) && isSprinting)
+        
+        if(isSprinting && playerStamina > 0 && !isRegening)
         {
-            playerStamina -= 2 * Time.deltaTime;
+            playerStamina -= 20 * Time.deltaTime;
             gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
-            yield return tickRate;
+            yield return new WaitForSeconds(tickRate);
         }
     }
 
     IEnumerator RegenStamina()
     {
-        isRegening = true;
-        while((playerStamina < totalStamina) && !isSprinting)
-        {
-            playerStamina += 2 * Time.deltaTime;
+        if(playerStamina < totalStamina && !isSprinting){
+            Debug.Log("Regenning Stamina");
+            isRegening = true;
+
+            playerStamina += 2;
             gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
-            yield return tickRate;
+
+            yield return new WaitForSeconds(tickRate);
+
+            isRegening = false;
         }
     }
 
     IEnumerator StaminaBreak()
     {
         isExhausted = true;
-
-        setPlayerSpeed(exhSpeed);
         yield return new WaitForSeconds(5);
-
-        setPlayerSpeed(baseSpeed);
-        playerStamina = totalStamina;
-        gamemanager.instance.playerStaminaBar.fillAmount = playerStamina / totalStamina;
-
         isExhausted = false;
     }
 
@@ -278,7 +240,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         healthPoints -= amount;
         updatePlayerUI();
 
-        if (healthPoints <= 0)
+        if (healthPoints <= 0 && !gamemanager.instance.isPaused)
         {
             gamemanager.instance.youLoseMenu();
         }
@@ -287,6 +249,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void updatePlayerUI()
     {
         gamemanager.instance.playerHPBar.fillAmount = (float)healthPoints / startHealth;
+        gamemanager.instance.healthPointsText.text = healthPoints.ToString() + " / " + startHealth.ToString();
     }
 
     public void spawnPlayer()
@@ -303,11 +266,13 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     }
     public void addPlayerSeed(float amount)
     {
-        playerSpeed += amount;
+        baseSpeedOrignal = baseSpeed;
+        baseSpeed += amount;
     }
     public void setPlayerSpeed(float amount)
     {
-        playerSpeed = amount;
+        baseSpeedOrignal = baseSpeed;
+        baseSpeed = amount;
     }
     public void addPlayerDamage(int amount)
     {

@@ -26,15 +26,17 @@ public class gamemanager : MonoBehaviour
     [SerializeField] Image levelBar;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject winMenu;
-    [SerializeField] GameObject loseMenu;
+    public GameObject loseMenu;
     [SerializeField] GameObject storeMenu;
     [SerializeField] GameObject mainMenu;
     [SerializeField] GameObject fullMainMenu;
     [SerializeField] GameObject characterSelectionMenu;
     [SerializeField] GameObject playerDamageFlash;
     public TMP_Text waveTimerText;
-    public TMP_Text buyTimerText;
     public TMP_Text waveNumberText;
+    public TMP_Text stanimaText;
+    public TMP_Text experienceText;
+    public TMP_Text healthPointsText;
 
     [Header("--- Store Components ---")]
     public List<Item> storeItems;
@@ -46,7 +48,7 @@ public class gamemanager : MonoBehaviour
 
 
     //Variable definitions:
-    bool isPaused;
+    public bool isPaused;
     bool pickup;
     private int experience;
     private int level;
@@ -61,6 +63,10 @@ public class gamemanager : MonoBehaviour
         playerSpawnPos = GameObject.FindGameObjectWithTag("Player Spawn Pos");
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+    }
+    private void Start()
+    {
+        addExperience(0);
     }
 
     void Update()
@@ -166,10 +172,10 @@ public class gamemanager : MonoBehaviour
     {
         enemiesRemain += amount;
 
-        if (enemiesRemain <= 0)
-        {
-            StartCoroutine(youWinMenu());
-        }
+        //if (enemiesRemain <= 0)
+        //{
+        //    StartCoroutine(youWinMenu());
+        //}
     }
     public void updateStoreMenu()
     {
@@ -200,6 +206,7 @@ public class gamemanager : MonoBehaviour
     {
         experience += amount;
         levelBar.fillAmount = (float)experience / experienceToNextLevel;
+        experienceText.text = experience.ToString() + " / " + experienceToNextLevel.ToString();
         if (experience >= experienceToNextLevel)
         {
             level++;

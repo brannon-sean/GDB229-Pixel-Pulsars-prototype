@@ -35,10 +35,11 @@ public class spawnManager : MonoBehaviour
     private int previousWaveSize;
     private int wave;
     private bool waveSpawned;
+    private bool triggerEntered;
 
     private void Update()
     {
-        if (!waveSpawned)
+        if (!waveSpawned && triggerEntered)
         {
 
             StartCoroutine(waveSpawner());
@@ -126,5 +127,9 @@ public class spawnManager : MonoBehaviour
         }
     }
 
+    public void startSpawning()
+    {
+        triggerEntered = true;
+    }
 
 }
