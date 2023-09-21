@@ -15,6 +15,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject loot;
     [SerializeField] Collider collider;
+    [SerializeField] AudioSource audio;
 
     [Header("--- Enemy Stats ---")]
     [SerializeField] int healthPoints;
@@ -75,6 +76,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
                         if (!isShooting && angleToPlayer <= shootAngle)
                         {
                             StartCoroutine(shoot());
+                            StartCoroutine(playAudioClip(audio));
                         }
 
                     }
@@ -93,6 +95,15 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
         Instantiate(bullet, shootPosition.position, transform.rotation);
         yield return new WaitForSeconds(shootRate);
         isShooting = false;
+    }
+
+    IEnumerator playAudioClip(AudioSource clip)
+    {
+        if (clip != null)
+        {
+            clip.Play();
+            yield return new WaitForSeconds(clip.clip.length);
+        }
     }
 
     public void takeDamage(int amount)

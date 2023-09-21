@@ -11,6 +11,9 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     [SerializeField] GameObject bulletSpawn;
     [SerializeField] GameObject bulletFlash;
     [SerializeField] GameObject gunModel;
+    [SerializeField] AudioSource gunshotSound;
+    [SerializeField] AudioSource playerHurtAudio;
+    [SerializeField] AudioSource playerJumpAudio;
 
     [Header("--- Player Stats ---")]
     public float healthPoints;
@@ -69,11 +72,19 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         if (Input.GetButton("Shoot") && !isShooting && amEnabled)
         {
             gunshotEffect.Play();
-            
+            StartCoroutine(playAudioClip(gunshotSound));
             StartCoroutine(shoot());
         }
     }
 
+    IEnumerator playAudioClip(AudioSource clip)
+    {
+        if (clip != null)
+        {
+            clip.Play();
+            yield return new WaitForSeconds(clip.clip.length);
+        }
+    }
     void movement()
     {
 
@@ -111,6 +122,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         {
             jumpedTimes++;
             playerVelocity.y = jumpHeight;
+            StartCoroutine(playAudioClip(playerJumpAudio));
         }
 
         playerVelocity.y += gravityValue * Time.deltaTime;
@@ -249,6 +261,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         healthPoints -= amount;
         StartCoroutine(gamemanager.instance.playerFlashDamage());
         updatePlayerUI();
+        StartCoroutine(playAudioClip(playerHurtAudio));
 
         if (healthPoints <= 0 && !gamemanager.instance.isPaused)
         {
