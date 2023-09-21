@@ -568,6 +568,7 @@ GameObject:
   - component: {fileID: 1857691005673970729}
   - component: {fileID: 7398203310956601027}
   - component: {fileID: 7065611867746894642}
+  - component: {fileID: 4344517323319193672}
   m_Layer: 7
   m_Name: Enemy Sniper
   m_TagString: Enemy
@@ -616,6 +617,8 @@ MonoBehaviour:
   shootRate: 1
   experienceMin: 5
   experienceMax: 12
+  animator: {fileID: 0}
+  anim: 0
 --- !u!195 &1857691005673970729
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -682,6 +685,27 @@ CapsuleCollider:
   m_Height: 0.28000003
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!95 &4344517323319193672
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3694073916709355415}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3923951326402273566
 GameObject:
   m_ObjectHideFlags: 0

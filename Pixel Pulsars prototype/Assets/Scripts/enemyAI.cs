@@ -9,6 +9,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [Header("--- Components ---")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
+    [SerializeField] Animator animator;
     [SerializeField] Transform shootPosition;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject bullet;
@@ -22,6 +23,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] float shootRate;
     [SerializeField] int experienceMin;
     [SerializeField] int experienceMax;
+
+    //Animations
+    [SerializeField] float animChangeSpeed;
 
     //Variable Definitions:
     private Vector3 playerDirection;
@@ -37,6 +41,9 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     }
     void Update()
     {
+        float enemyVel = agent.velocity.normalized.magnitude;
+        animator.SetFloat("Speed", Mathf.Lerp(animator.GetFloat("Speed"), enemyVel, Time.deltaTime * animChangeSpeed));
+
         if (playerInRange && canSeePlayer())
         {
            
@@ -83,14 +90,21 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
 
     public void takeDamage(int amount)
     {
-        agent.SetDestination(gamemanager.instance.player.transform.position);
         healthPoints -= amount;
-        StartCoroutine(flashDamage());
+
         if(healthPoints <= 0)
         {
+            agent.enabled = false;
+            animator.SetBool("Dead", true);
             gamemanager.instance.updateGameGoal(-1);
             gamemanager.instance.addExperience(UnityEngine.Random.Range(experienceMin, experienceMax));
-            Destroy(gameObject);
+
+            StartCoroutine(DeathCleanup());
+        }
+        else
+        {
+            StartCoroutine(flashDamage());
+            agent.SetDestination(gamemanager.instance.player.transform.position);
         }
     }
     IEnumerator flashDamage()
@@ -108,5 +122,11 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     public void physics(Vector3 push)
     {
         agent.velocity += push / 2;
+    }
+
+    IEnumerator DeathCleanup()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 }
