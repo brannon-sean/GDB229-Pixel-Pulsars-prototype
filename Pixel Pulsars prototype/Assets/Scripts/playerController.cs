@@ -181,6 +181,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
         {
             StopCoroutine(RegenStamina());
             StartCoroutine(StaminaBreak());
+            StopCoroutine(StaminaBreak());
         }
     }
 
