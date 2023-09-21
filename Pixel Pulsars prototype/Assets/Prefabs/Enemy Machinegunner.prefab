@@ -5732,6 +5732,7 @@ MonoBehaviour:
   headPos: {fileID: 4343570819484252}
   bullet: {fileID: 6568610698451559880, guid: 5fadd8296df868f499fb460bff548489, type: 3}
   loot: {fileID: 5460856503541291857, guid: a9b2e85753280be4ba14e98037b55ac0, type: 3}
+  collider: {fileID: 7272076064015602338}
   healthPoints: 4
   targetFaceSpeed: 4
   viewAngle: 360
@@ -5802,10 +5803,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06129086
-  m_Height: 0.28000003
+  m_Radius: 0.18532757
+  m_Height: 0.38940582
   m_Direction: 1
-  m_Center: {x: 0, y: 0.15, z: 0}
+  m_Center: {x: 0.016293367, y: 0.13900217, z: 0.04163965}
 --- !u!1 &2388325867787927761
 GameObject:
   m_ObjectHideFlags: 0

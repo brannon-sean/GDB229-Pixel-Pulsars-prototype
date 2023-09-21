@@ -14,6 +14,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     [SerializeField] Transform headPos;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject loot;
+    [SerializeField] Collider collider;
 
     [Header("--- Enemy Stats ---")]
     [SerializeField] int healthPoints;
@@ -39,6 +40,7 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
     {
         stoppingDistOrig = agent.stoppingDistance;
         gamemanager.instance.updateGameGoal(1);
+        isDead = false;
     }
     void Update()
     {
@@ -104,6 +106,8 @@ public class enemyAI : MonoBehaviour, IDamage, IPhysics
             isDead = true;
             gamemanager.instance.updateGameGoal(-1);
             gamemanager.instance.addExperience(UnityEngine.Random.Range(experienceMin, experienceMax));
+
+            collider.enabled = false;
 
             StartCoroutine(DeathCleanup());
         }

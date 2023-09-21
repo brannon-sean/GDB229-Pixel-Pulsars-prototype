@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rigidBody: {fileID: 8620410084935660920}
   damage: 1
-  speed: 25
-  destroyTime: 3
+  speed: 3
+  destroyTime: 30
 --- !u!135 &408045317015559325
 SphereCollider:
   m_ObjectHideFlags: 0

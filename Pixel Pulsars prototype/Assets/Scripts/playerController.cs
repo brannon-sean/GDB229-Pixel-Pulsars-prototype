@@ -125,7 +125,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
             {
                 if (!isSprinting)
                 {
-                    runSpeed = baseSpeed * 2;
+                    runSpeed = baseSpeed * 1.1f;
                     isSprinting = true;
                 }
 
@@ -207,22 +207,29 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
 
         if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootDistance))
         {
-            IDamage damagable = hit.collider.GetComponent<IDamage>();
-            if (damagable != null)
+            try
             {
-                damagable.takeDamage(shootDamage);
-                if(startHealth >= healthPoints + (shootDamage * lifeSteal))
+                IDamage damagable = hit.collider.GetComponent<IDamage>();
+                if (damagable != null)
                 {
-                    healthPoints += shootDamage * lifeSteal;
-                    updatePlayerUI();
+                    damagable.takeDamage(shootDamage);
+                    if (startHealth >= healthPoints + (shootDamage * lifeSteal))
+                    {
+                        healthPoints += shootDamage * lifeSteal;
+                        updatePlayerUI();
+                    }
+                    else if (startHealth <= healthPoints + (shootDamage * lifeSteal))
+                    {
+                        float healToFull = startHealth - healthPoints;
+                        healthPoints += healToFull;
+                        updatePlayerUI();
+                    }
+
                 }
-                else if(startHealth <= healthPoints + (shootDamage * lifeSteal))
-                {
-                    float healToFull = startHealth - healthPoints;
-                    healthPoints += healToFull;
-                    updatePlayerUI();
-                }
-                
+            }
+            catch
+            {
+
             }
         }
 
@@ -240,6 +247,7 @@ public class playerController : MonoBehaviour, IDamage, IPhysics
     public void takeDamage(int amount)
     {
         healthPoints -= amount;
+        StartCoroutine(gamemanager.instance.playerFlashDamage());
         updatePlayerUI();
 
         if (healthPoints <= 0 && !gamemanager.instance.isPaused)

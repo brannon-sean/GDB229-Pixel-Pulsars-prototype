@@ -179,6 +179,12 @@ public class gamemanager : MonoBehaviour
         activeMenu = winMenu;
         activeMenu.SetActive(isPaused);
     }
+    public IEnumerator playerFlashDamage()
+    {
+        playerDamageFlash.SetActive(true);
+        yield return new WaitForSeconds(.05f);
+        playerDamageFlash.SetActive(false);
+    }
     public void youLoseMenu()
     {
         activeMenu = loseMenu; 
@@ -229,6 +235,7 @@ public class gamemanager : MonoBehaviour
             level++;
             experienceToNextLevel = (int)(experienceToNextLevel * 1.3);
             levelUp();
+            experienceText.text = 0.ToString() + " / " + experienceToNextLevel.ToString();
         }
     }
     public void levelUp()
