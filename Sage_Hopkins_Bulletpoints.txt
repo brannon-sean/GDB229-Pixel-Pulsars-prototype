@@ -1,3 +1,5 @@
+------ Prototype 1 -------
+
 - Added bullet.cs from Lecture 2
 - Added gamemanager.cs from lecture 2
 - Updated enemyAI.cs from lecture 2
@@ -10,3 +12,42 @@
 - Added breakableWall.cs to handle breaking walls with IDamage
 - Updated playerInventory.cs to add item counter (Issue in github for counter starting at 15).
 - Fixed pickupItem.cs, the menu option not disappears after picking up an item.
+
+------ Prototype 2 -------
+
+-  Added sprint function to playerController.cs
+- Updated wave spawner, made changes and fixed bugs.
+- Updated and fixed main menu.
+- Updated and fixed character selection
+- Fixed bugged with youLoseMenu
+- Added spawnTrigger.cs
+- Updated buttonFunctions.cs fixed issues and bugs.
+- Added functionality to gamemanager.
+- Added stamina, exhaustion, regen and drain
+- Added playerhealth bar.
+- Added experience
+- Added audio and visual queues when guns fires.
+- Updated enemyAI to fit our game.
+- Updated store, fixed issues and bugs.
+- Updated store cards, fixed issues and bugs.
+
+Please note that we had issues with Git and ended up working on these collaboratively. Below you'll find a list of what I did prior to the git issues:
+
+- Created spawnManager scrpt
+
+- Created store scriptable object script
+
+- Created storeCard script
+
+- Created playerInventory script
+
+- Created gun scritpable object script
+
+- Created character scriptable object script
+
+- Updated buttonFunctions to make above scripts work
+
+- Updated gameManager to make above scripts work
+
+- Updated playerController to make above scripts work
+
