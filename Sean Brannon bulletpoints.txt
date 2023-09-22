@@ -6,3 +6,8 @@
 .added IPhysics script
 .edited player and enemy to take IPhysics script (still needs work but basic
 concept is there)
+
+
+.added lecture 4 items
+.fixed jump pad code
+-----had issues with github, we ended up working on the rest collaboratively through discord and screen sharing-----
